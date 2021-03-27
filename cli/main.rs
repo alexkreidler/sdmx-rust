@@ -1,12 +1,8 @@
-use anyhow::{anyhow, Context, Result};
+use anyhow::{anyhow, Result};
 // use std::collections::HashMap;
 
-use reqwest::header::HeaderMap;
-use sdmxblaze::{
-    queries::MetadataQuery,
-    sdmx_sources::{Source, Sources},
-};
-use std::{fs, path};
+use sdmxblaze::{queries::metadata_query, sdmx_sources::Sources};
+use std::fs;
 
 use url::Url;
 
@@ -35,9 +31,35 @@ async fn main() -> Result<()> {
     let paths = ["dataflow", "all", "all", "latest"].to_vec();
 
     // Joining with a base url replaces the last item in path (public)
-    let mut path_url =
-        base_url.join(MetadataQuery::new(paths)?.to_string().as_str())?;
+    let mut path_url = base_url.join(metadata_query(paths).as_str())?;
 
+    let url = path_url.to_string();
+
+    println!("{:#?}", url);
+
+    let accepts = vec![
+        "application/xml",
+        "application/vnd.sdmx.structure+xml;version=2.1",
+        "application/vnd.sdmx.structure+json;version=1.0.0",
+        // "application/vnd.sdmx.genericmetadata+xml;version=2.1",
+        // "application/vnd.sdmx.genericdata+xml;version=2.1",
+        // "application/vnd.sdmx.data+json;version=1.0.0",
+        // "application/vnd.sdmx.data+csv;version=1.0.0",
+    ];
+
+    for accept in accepts {
+        let resp = reqwest::Client::new()
+            .get(&url)
+            .header("Accept", accept)
+            .send()
+            .await?;
+
+        println!("{:#?}", resp);
+
+        let mut out = resp.text().await?;
+        // out.truncate(200);
+        println!("{}", out);
+    }
     // base_url.join(paths.join("/").as_str())?;
 
     // path_url.set_query(Some(
@@ -47,22 +69,6 @@ async fn main() -> Result<()> {
     //     ])
     //     .as_str(),
     // ));
-
-    let url = path_url.to_string();
-
-    println!("{:#?}", url);
-
-    let client = reqwest::ClientBuilder::new().build()?;
-    // client.get(url).headers(
-    //     HeaderMap::
-    // )
-    let resp = reqwest::get(url).await?;
-
-    // println!("{:#?}", resp);
-
-    let mut out = resp.text().await?;
-    // out.truncate(200);
-    println!("{}", out);
 
     Ok(())
 }
