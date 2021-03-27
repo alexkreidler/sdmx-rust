@@ -2,7 +2,10 @@ use anyhow::{anyhow, Context, Result};
 // use std::collections::HashMap;
 
 use reqwest::header::HeaderMap;
-use sdmxblaze::sdmx_sources::{Source, Sources};
+use sdmxblaze::{
+    queries::MetadataQuery,
+    sdmx_sources::{Source, Sources},
+};
 use std::{fs, path};
 
 use url::Url;
@@ -29,18 +32,21 @@ async fn main() -> Result<()> {
     // DATA QUERIES
     let base_url = Url::parse(format!("{}/", &unicef.url).as_str())?;
 
-    let paths = ["dataflow", "all", "all", "latest"];
+    let paths = ["dataflow", "all", "all", "latest"].to_vec();
 
     // Joining with a base url replaces the last item in path (public)
-    let mut path_url = base_url.join(paths.join("/").as_str())?;
+    let mut path_url =
+        base_url.join(MetadataQuery::new(paths)?.to_string().as_str())?;
 
-    path_url.set_query(Some(
-        querystring::stringify(vec![
-            ("format", "sdmx-2.1"),
-            ("references", "none"),
-        ])
-        .as_str(),
-    ));
+    // base_url.join(paths.join("/").as_str())?;
+
+    // path_url.set_query(Some(
+    //     querystring::stringify(vec![
+    //         ("format", "sdmx-2.1"),
+    //         ("references", "none"),
+    //     ])
+    //     .as_str(),
+    // ));
 
     let url = path_url.to_string();
 
