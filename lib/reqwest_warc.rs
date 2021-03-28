@@ -20,26 +20,47 @@ pub fn serialize_headers(headers: &HeaderMap) -> String {
 pub async fn write_request(req: reqwest::Request) -> anyhow::Result<()> {
     let bd = req.body().ok_or(anyhow!("No body"))?;
 
-    bd.as_bytes();
+    let headers = req.headers().clone();
+
+    write_warc(
+        req.url()
+            .clone()
+            .host_str()
+            .ok_or(anyhow!("No host for request {:#?}", req))?
+            .to_string(),
+        RecordType::Request,
+        &headers,
+        bd.as_bytes()
+            .ok_or(anyhow!("Could not convert request body to bytes"))?,
+    )
+    .await?;
 
     Ok(())
 }
 
 pub async fn write_response(res: reqwest::Response) -> Result<()> {
-    // Serialize response
     let headers = res.headers().clone();
-    // let response_serialized = res.text().await?;
-    // let bd = res.body().ok_or_else(|| Err(anyhow!("No body")))?;
+    let res_url = res.url().clone();
 
     let body = res.text().await?;
     let bd = body.as_bytes();
 
-    write_warc(RecordType::Response, &headers, bd).await?;
+    write_warc(
+        res_url
+            .host_str()
+            .ok_or(anyhow!("No host for response"))?
+            .to_string(),
+        RecordType::Response,
+        &headers,
+        bd,
+    )
+    .await?;
 
     Ok(())
 }
 
 pub async fn write_warc(
+    hostname: String,
     typ: RecordType,
     headers: &HeaderMap,
     body: &[u8],
@@ -57,7 +78,8 @@ pub async fn write_warc(
     std::fs::create_dir_all(dir)?;
 
     let id = Ulid::new().to_string();
-    let fname = vec![id.clone(), "warc".to_string()].join(".");
+    let fname =
+        vec![hostname + "-" + id.as_str(), "warc".to_string()].join(".");
     let file = OpenOptions::new()
         .write(true)
         .create_new(true)

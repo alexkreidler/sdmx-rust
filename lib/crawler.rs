@@ -71,16 +71,16 @@ mod tests {
 
     use super::*;
 
-    #[tokio::test]
-    async fn get_random_dataflow() -> Result<()> {
-        get_dataflows("https://google.com/").await?;
-        Ok(())
-    }
+    // #[tokio::test]
+    // async fn get_random_dataflow() -> Result<()> {
+    //     get_dataflows("https://google.com/").await?;
+    //     Ok(())
+    // }
 
     #[tokio::test]
     async fn get_dataflow_details() -> Result<()> {
         let source = get_source("IMF")?;
-        get_dataflows(source.url).await?;
+        get_dataflows(source.url + "/").await?;
         Ok(())
     }
     //
