@@ -98,8 +98,12 @@ async fn main() -> Result<()> {
 
     let mut next = Vec::new();
     for fut in output {
-        let n = fut.await?;
-        next.push(n)
+        let n = fut.await; //?;
+        if n.is_ok() {
+            next.push(n.unwrap())
+        } else {
+            println!("{:#?}", n);
+        }
     }
 
     // let next = &output?;

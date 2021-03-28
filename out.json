@@ -1,0 +1,506 @@
+[
+    {
+        "id": "ABS",
+        "data_content_type": "JSON",
+        "url": "http://stat.data.abs.gov.au/sdmx-json",
+        "name": "Australian Bureau of Statistics",
+        "supports": null,
+        "documentation": null,
+        "headers": null,
+        "structural_accept": {
+            "supported_accept_headers": [],
+            "denied_accept_headers": [
+                "application/xml",
+                "application/json",
+                "application/vnd.sdmx.structure+xml;version=2.1",
+                "application/vnd.sdmx.structure+json;version=1.0.0"
+            ]
+        },
+        "data_accept": null
+    },
+    {
+        "id": "ECB",
+        "data_content_type": null,
+        "url": "https://sdw-wsrest.ecb.europa.eu/service",
+        "name": "European Central Bank",
+        "supports": {
+            "preview": true,
+            "agencyscheme": null,
+            "categoryscheme": null,
+            "codelist": null,
+            "conceptscheme": null,
+            "provisionagreement": null,
+            "structure-specific data": null,
+            "datastructure": null
+        },
+        "documentation": null,
+        "headers": null,
+        "structural_accept": {
+            "supported_accept_headers": [
+                "application/xml",
+                "application/vnd.sdmx.structure+xml;version=2.1"
+            ],
+            "denied_accept_headers": [
+                "application/json",
+                "application/vnd.sdmx.structure+json;version=1.0.0"
+            ]
+        },
+        "data_accept": null
+    },
+    {
+        "id": "ESTAT",
+        "data_content_type": null,
+        "url": "http://ec.europa.eu/eurostat/SDMX/diss-web/rest",
+        "name": "Eurostat",
+        "supports": {
+            "preview": null,
+            "agencyscheme": false,
+            "categoryscheme": false,
+            "codelist": false,
+            "conceptscheme": false,
+            "provisionagreement": false,
+            "structure-specific data": null,
+            "datastructure": null
+        },
+        "documentation": "http://data.un.org/Host.aspx?Content=API",
+        "headers": null,
+        "structural_accept": {
+            "supported_accept_headers": [],
+            "denied_accept_headers": [
+                "application/xml",
+                "application/json",
+                "application/vnd.sdmx.structure+xml;version=2.1",
+                "application/vnd.sdmx.structure+json;version=1.0.0"
+            ]
+        },
+        "data_accept": null
+    },
+    {
+        "id": "ILO",
+        "data_content_type": null,
+        "url": "http://www.ilo.org/ilostat/sdmx/ws/rest",
+        "name": "International Labor Organization",
+        "supports": {
+            "preview": null,
+            "agencyscheme": null,
+            "categoryscheme": null,
+            "codelist": null,
+            "conceptscheme": null,
+            "provisionagreement": false,
+            "structure-specific data": null,
+            "datastructure": null
+        },
+        "documentation": null,
+        "headers": {
+            "Accept": "application/vnd.sdmx.structurespecificdata+xml;version=2.1"
+        },
+        "structural_accept": {
+            "supported_accept_headers": [],
+            "denied_accept_headers": [
+                "application/xml",
+                "application/json",
+                "application/vnd.sdmx.structure+xml;version=2.1",
+                "application/vnd.sdmx.structure+json;version=1.0.0"
+            ]
+        },
+        "data_accept": null
+    },
+    {
+        "id": "IMF",
+        "data_content_type": null,
+        "url": "https://sdmxcentral.imf.org/ws/public/sdmxapi/rest",
+        "name": "International Monetary Fund",
+        "supports": {
+            "preview": null,
+            "agencyscheme": null,
+            "categoryscheme": null,
+            "codelist": null,
+            "conceptscheme": null,
+            "provisionagreement": false,
+            "structure-specific data": null,
+            "datastructure": null
+        },
+        "documentation": null,
+        "headers": null,
+        "structural_accept": {
+            "supported_accept_headers": [
+                "application/xml",
+                "application/json",
+                "application/vnd.sdmx.structure+xml;version=2.1"
+            ],
+            "denied_accept_headers": [
+                "application/vnd.sdmx.structure+json;version=1.0.0"
+            ]
+        },
+        "data_accept": null
+    },
+    {
+        "id": "INEGI",
+        "data_content_type": null,
+        "url": "http://sdmx.snieg.mx/service/rest",
+        "name": "Instituto Nacional de Estadística y Geografía (MX)",
+        "supports": {
+            "preview": null,
+            "agencyscheme": false,
+            "categoryscheme": null,
+            "codelist": null,
+            "conceptscheme": null,
+            "provisionagreement": false,
+            "structure-specific data": true,
+            "datastructure": null
+        },
+        "documentation": null,
+        "headers": null,
+        "structural_accept": {
+            "supported_accept_headers": [
+                "application/xml",
+                "application/json",
+                "application/vnd.sdmx.structure+xml;version=2.1"
+            ],
+            "denied_accept_headers": [
+                "application/vnd.sdmx.structure+json;version=1.0.0"
+            ]
+        },
+        "data_accept": null
+    },
+    {
+        "id": "INSEE",
+        "data_content_type": null,
+        "url": "https://www.bdm.insee.fr/series/sdmx",
+        "name": "Institut national de la statistique et des études économiques (FR)",
+        "supports": {
+            "preview": null,
+            "agencyscheme": null,
+            "categoryscheme": null,
+            "codelist": null,
+            "conceptscheme": null,
+            "provisionagreement": false,
+            "structure-specific data": null,
+            "datastructure": null
+        },
+        "documentation": null,
+        "headers": {
+            "Accept": "application/vnd.sdmx.genericdata+xml;version=2.1"
+        },
+        "structural_accept": {
+            "supported_accept_headers": [
+                "application/xml",
+                "application/vnd.sdmx.structure+xml;version=2.1"
+            ],
+            "denied_accept_headers": [
+                "application/json",
+                "application/vnd.sdmx.structure+json;version=1.0.0"
+            ]
+        },
+        "data_accept": null
+    },
+    {
+        "id": "ISTAT",
+        "data_content_type": null,
+        "url": "http://sdmx.istat.it/SDMXWS/rest",
+        "name": "Instituto Nationale di Statistica (IT)",
+        "supports": {
+            "preview": null,
+            "agencyscheme": null,
+            "categoryscheme": null,
+            "codelist": null,
+            "conceptscheme": null,
+            "provisionagreement": false,
+            "structure-specific data": true,
+            "datastructure": null
+        },
+        "documentation": null,
+        "headers": null,
+        "structural_accept": {
+            "supported_accept_headers": [
+                "application/xml",
+                "application/json",
+                "application/vnd.sdmx.structure+xml;version=2.1"
+            ],
+            "denied_accept_headers": [
+                "application/vnd.sdmx.structure+json;version=1.0.0"
+            ]
+        },
+        "data_accept": null
+    },
+    {
+        "id": "NBB",
+        "data_content_type": "JSON",
+        "url": "https://stat.nbb.be/sdmx-json",
+        "name": "National Bank of Belgium",
+        "supports": null,
+        "documentation": "https://www.nbb.be/doc/dq/migratie_belgostat/en/nbb_stat-technical-manual.pdf",
+        "headers": null,
+        "structural_accept": {
+            "supported_accept_headers": [],
+            "denied_accept_headers": [
+                "application/xml",
+                "application/json",
+                "application/vnd.sdmx.structure+xml;version=2.1",
+                "application/vnd.sdmx.structure+json;version=1.0.0"
+            ]
+        },
+        "data_accept": null
+    },
+    {
+        "id": "OECD",
+        "data_content_type": "JSON",
+        "url": "https://stats.oecd.org/SDMX-JSON",
+        "name": "Organisation for Economic Co-operation and Development",
+        "supports": null,
+        "documentation": null,
+        "headers": null,
+        "structural_accept": {
+            "supported_accept_headers": [],
+            "denied_accept_headers": [
+                "application/xml",
+                "application/json",
+                "application/vnd.sdmx.structure+xml;version=2.1",
+                "application/vnd.sdmx.structure+json;version=1.0.0"
+            ]
+        },
+        "data_accept": null
+    },
+    {
+        "id": "NB",
+        "data_content_type": null,
+        "url": "https://data.norges-bank.no/api",
+        "name": "Norges Bank (NO)",
+        "supports": {
+            "preview": null,
+            "agencyscheme": null,
+            "categoryscheme": false,
+            "codelist": null,
+            "conceptscheme": null,
+            "provisionagreement": null,
+            "structure-specific data": true,
+            "datastructure": null
+        },
+        "documentation": null,
+        "headers": {
+            "Accept": "application/vnd.sdmx.genericdata+xml;version=2.1"
+        },
+        "structural_accept": {
+            "supported_accept_headers": [
+                "application/xml",
+                "application/json",
+                "application/vnd.sdmx.structure+xml;version=2.1",
+                "application/vnd.sdmx.structure+json;version=1.0.0"
+            ],
+            "denied_accept_headers": []
+        },
+        "data_accept": null
+    },
+    {
+        "id": "SGR",
+        "data_content_type": null,
+        "url": "https://registry.sdmx.org/ws/rest",
+        "name": "SDMX Global Registry",
+        "supports": null,
+        "documentation": null,
+        "headers": null,
+        "structural_accept": {
+            "supported_accept_headers": [
+                "application/xml",
+                "application/json",
+                "application/vnd.sdmx.structure+xml;version=2.1"
+            ],
+            "denied_accept_headers": [
+                "application/vnd.sdmx.structure+json;version=1.0.0"
+            ]
+        },
+        "data_accept": null
+    },
+    {
+        "id": "SPC",
+        "data_content_type": null,
+        "url": "https://stats-nsi-stable.pacificdata.org/rest",
+        "name": "Pacific Data Hub DotStat by The Pacific Community (SPC)",
+        "supports": {
+            "preview": null,
+            "agencyscheme": null,
+            "categoryscheme": null,
+            "codelist": null,
+            "conceptscheme": null,
+            "provisionagreement": false,
+            "structure-specific data": null,
+            "datastructure": null
+        },
+        "documentation": "https://docs.pacificdata.org/dotstat",
+        "headers": null,
+        "structural_accept": {
+            "supported_accept_headers": [
+                "application/xml",
+                "application/json",
+                "application/vnd.sdmx.structure+xml;version=2.1"
+            ],
+            "denied_accept_headers": [
+                "application/vnd.sdmx.structure+json;version=1.0.0"
+            ]
+        },
+        "data_accept": null
+    },
+    {
+        "id": "STAT_EE",
+        "data_content_type": "JSON",
+        "url": "http://andmebaas.stat.ee/sdmx-json",
+        "name": "Statistics Estonia",
+        "supports": null,
+        "documentation": "https://www.stat.ee/sites/default/files/2020-09/API-instructions.pdf",
+        "headers": null,
+        "structural_accept": {
+            "supported_accept_headers": [],
+            "denied_accept_headers": [
+                "application/xml",
+                "application/json",
+                "application/vnd.sdmx.structure+xml;version=2.1",
+                "application/vnd.sdmx.structure+json;version=1.0.0"
+            ]
+        },
+        "data_accept": null
+    },
+    {
+        "id": "UNESCO",
+        "data_content_type": null,
+        "url": "http://api.uis.unesco.org/sdmx",
+        "name": "UN Educational, Scientific and Cultural Organization",
+        "supports": {
+            "preview": null,
+            "agencyscheme": null,
+            "categoryscheme": null,
+            "codelist": null,
+            "conceptscheme": null,
+            "provisionagreement": null,
+            "structure-specific data": null,
+            "datastructure": false
+        },
+        "documentation": null,
+        "headers": {
+            "Accept": "application/vnd.sdmx.structure+xml;version=2.1"
+        },
+        "structural_accept": {
+            "supported_accept_headers": [],
+            "denied_accept_headers": [
+                "application/xml",
+                "application/json",
+                "application/vnd.sdmx.structure+xml;version=2.1",
+                "application/vnd.sdmx.structure+json;version=1.0.0"
+            ]
+        },
+        "data_accept": null
+    },
+    {
+        "id": "UNICEF",
+        "data_content_type": null,
+        "url": "https://sdmx.data.unicef.org/ws/public/sdmxapi/rest",
+        "name": "UN Children's Fund",
+        "supports": {
+            "preview": null,
+            "agencyscheme": null,
+            "categoryscheme": null,
+            "codelist": null,
+            "conceptscheme": null,
+            "provisionagreement": null,
+            "structure-specific data": true,
+            "datastructure": null
+        },
+        "documentation": null,
+        "headers": null,
+        "structural_accept": {
+            "supported_accept_headers": [
+                "application/xml",
+                "application/json",
+                "application/vnd.sdmx.structure+xml;version=2.1",
+                "application/vnd.sdmx.structure+json;version=1.0.0"
+            ],
+            "denied_accept_headers": []
+        },
+        "data_accept": null
+    },
+    {
+        "id": "UNSD",
+        "data_content_type": null,
+        "url": "http://data.un.org/WS/rest",
+        "name": "United Nations Statistics Division",
+        "supports": {
+            "preview": true,
+            "agencyscheme": null,
+            "categoryscheme": null,
+            "codelist": null,
+            "conceptscheme": null,
+            "provisionagreement": false,
+            "structure-specific data": null,
+            "datastructure": null
+        },
+        "documentation": null,
+        "headers": null,
+        "structural_accept": {
+            "supported_accept_headers": [
+                "application/xml",
+                "application/json",
+                "application/vnd.sdmx.structure+xml;version=2.1"
+            ],
+            "denied_accept_headers": [
+                "application/vnd.sdmx.structure+json;version=1.0.0"
+            ]
+        },
+        "data_accept": null
+    },
+    {
+        "id": "WB",
+        "data_content_type": null,
+        "url": "http://wits.worldbank.org/API/V1/SDMX/V21/rest",
+        "name": "World Bank World Integrated Trade Solution",
+        "supports": {
+            "preview": null,
+            "agencyscheme": false,
+            "categoryscheme": null,
+            "codelist": null,
+            "conceptscheme": null,
+            "provisionagreement": false,
+            "structure-specific data": null,
+            "datastructure": null
+        },
+        "documentation": null,
+        "headers": null,
+        "structural_accept": {
+            "supported_accept_headers": [
+                "application/xml",
+                "application/json",
+                "application/vnd.sdmx.structure+xml;version=2.1"
+            ],
+            "denied_accept_headers": [
+                "application/vnd.sdmx.structure+json;version=1.0.0"
+            ]
+        },
+        "data_accept": null
+    },
+    {
+        "id": "WB_WDI",
+        "data_content_type": null,
+        "url": "http://api.worldbank.org/v2/sdmx/rest",
+        "name": "World Bank World Development Indicators",
+        "supports": {
+            "preview": null,
+            "agencyscheme": null,
+            "categoryscheme": null,
+            "codelist": null,
+            "conceptscheme": null,
+            "provisionagreement": false,
+            "structure-specific data": true,
+            "datastructure": null
+        },
+        "documentation": null,
+        "headers": null,
+        "structural_accept": {
+            "supported_accept_headers": [
+                "application/xml",
+                "application/json",
+                "application/vnd.sdmx.structure+xml;version=2.1",
+                "application/vnd.sdmx.structure+json;version=1.0.0"
+            ],
+            "denied_accept_headers": []
+        },
+        "data_accept": null
+    }
+]
