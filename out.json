@@ -72,5 +72,308 @@
             "application/json; charset=utf-8"
         ],
         "elapsed": []
+    },
+    {
+        "id": "ABS",
+        "data_content_type": "JSON",
+        "url": "https://api.data.abs.gov.au",
+        "name": "Australian Bureau of Statistics",
+        "structural_accept": {
+            "supported_accept_headers": [
+                "application/xml",
+                "application/json",
+                "application/vnd.sdmx.structure+xml;version=2.1",
+                "application/vnd.sdmx.structure+json;version=1.0.0"
+            ],
+            "denied_accept_headers": []
+        },
+        "response_content_types": [
+            "application/json; charset=utf-8",
+            "application/json; charset=utf-8",
+            "application/json; charset=utf-8",
+            "application/json; charset=utf-8"
+        ],
+        "elapsed": []
+    },
+    {
+        "id": "ECB",
+        "url": "https://sdw-wsrest.ecb.europa.eu/service",
+        "name": "European Central Bank",
+        "supports": {
+            "preview": true
+        },
+        "structural_accept": {
+            "supported_accept_headers": [],
+            "denied_accept_headers": [
+                "application/xml",
+                "application/json",
+                "application/vnd.sdmx.structure+xml;version=2.1",
+                "application/vnd.sdmx.structure+json;version=1.0.0"
+            ]
+        },
+        "response_content_types": [
+            "application/json;charset=utf-8",
+            "application/json;charset=utf-8",
+            "application/json;charset=utf-8",
+            "application/json;charset=utf-8"
+        ],
+        "elapsed": []
+    },
+    {
+        "id": "ESTAT",
+        "url": "http://ec.europa.eu/eurostat/SDMX/diss-web/rest",
+        "name": "Eurostat",
+        "supports": {
+            "agencyscheme": false,
+            "categoryscheme": false,
+            "codelist": false,
+            "conceptscheme": false,
+            "provisionagreement": false
+        },
+        "documentation": "http://data.un.org/Host.aspx?Content=API",
+        "structural_accept": {
+            "supported_accept_headers": [],
+            "denied_accept_headers": [
+                "application/xml",
+                "application/json",
+                "application/vnd.sdmx.structure+xml;version=2.1",
+                "application/vnd.sdmx.structure+json;version=1.0.0"
+            ]
+        },
+        "response_content_types": [
+            "text/html; charset=UTF-8",
+            "text/html; charset=UTF-8",
+            "text/html; charset=UTF-8",
+            "text/html; charset=UTF-8"
+        ],
+        "elapsed": []
+    },
+    {
+        "id": "ILO",
+        "url": "http://www.ilo.org/ilostat/sdmx/ws/rest",
+        "name": "International Labor Organization",
+        "supports": {
+            "provisionagreement": false
+        },
+        "headers": {
+            "Accept": "application/vnd.sdmx.structurespecificdata+xml;version=2.1"
+        },
+        "structural_accept": {
+            "supported_accept_headers": [],
+            "denied_accept_headers": [
+                "application/xml",
+                "application/json",
+                "application/vnd.sdmx.structure+xml;version=2.1",
+                "application/vnd.sdmx.structure+json;version=1.0.0"
+            ]
+        },
+        "response_content_types": [
+            "application/xml",
+            "application/xml",
+            "application/xml",
+            "application/xml"
+        ],
+        "elapsed": []
+    },
+    {
+        "id": "IMF",
+        "url": "https://sdmxcentral.imf.org/ws/public/sdmxapi/rest",
+        "name": "International Monetary Fund",
+        "supports": {
+            "provisionagreement": false
+        },
+        "structural_accept": {
+            "supported_accept_headers": [
+                "application/xml",
+                "application/json",
+                "application/vnd.sdmx.structure+xml;version=2.1",
+                "application/vnd.sdmx.structure+json;version=1.0.0"
+            ],
+            "denied_accept_headers": []
+        },
+        "response_content_types": [
+            "application/xml;charset=UTF-8",
+            "application/xml;charset=UTF-8",
+            "application/xml;charset=UTF-8",
+            "application/xml;charset=UTF-8"
+        ],
+        "elapsed": []
+    },
+    {
+        "id": "INSEE",
+        "url": "https://www.bdm.insee.fr/series/sdmx",
+        "name": "Institut national de la statistique et des études économiques (FR)",
+        "supports": {
+            "provisionagreement": false
+        },
+        "headers": {
+            "Accept": "application/vnd.sdmx.genericdata+xml;version=2.1"
+        },
+        "structural_accept": {
+            "supported_accept_headers": [],
+            "denied_accept_headers": [
+                "application/xml",
+                "application/json",
+                "application/vnd.sdmx.structure+xml;version=2.1",
+                "application/vnd.sdmx.structure+json;version=1.0.0"
+            ]
+        },
+        "response_content_types": [
+            "application/json",
+            "application/json",
+            "application/json",
+            "application/json"
+        ],
+        "elapsed": []
+    },
+    {
+        "id": "ISTAT",
+        "url": "http://sdmx.istat.it/SDMXWS/rest",
+        "name": "Instituto Nationale di Statistica (IT)",
+        "supports": {
+            "provisionagreement": false,
+            "structure-specific data": true
+        },
+        "structural_accept": {
+            "supported_accept_headers": [
+                "application/xml",
+                "application/json",
+                "application/vnd.sdmx.structure+xml;version=2.1",
+                "application/vnd.sdmx.structure+json;version=1.0.0"
+            ],
+            "denied_accept_headers": []
+        },
+        "response_content_types": [
+            "application/json; charset=utf-8",
+            "application/json; charset=utf-8",
+            "application/json; charset=utf-8",
+            "application/json; charset=utf-8"
+        ],
+        "elapsed": []
+    },
+    {
+        "id": "NB",
+        "url": "https://data.norges-bank.no/api",
+        "name": "Norges Bank (NO)",
+        "supports": {
+            "categoryscheme": false,
+            "structure-specific data": true
+        },
+        "headers": {
+            "Accept": "application/vnd.sdmx.genericdata+xml;version=2.1"
+        },
+        "structural_accept": {
+            "supported_accept_headers": [
+                "application/xml",
+                "application/json",
+                "application/vnd.sdmx.structure+xml;version=2.1",
+                "application/vnd.sdmx.structure+json;version=1.0.0"
+            ],
+            "denied_accept_headers": []
+        },
+        "response_content_types": [
+            "application/xml;charset=UTF-8",
+            "application/xml;charset=UTF-8",
+            "application/xml;charset=UTF-8",
+            "application/xml;charset=UTF-8"
+        ],
+        "elapsed": []
+    },
+    {
+        "id": "SGR",
+        "url": "https://registry.sdmx.org/ws/rest",
+        "name": "SDMX Global Registry",
+        "structural_accept": {
+            "supported_accept_headers": [
+                "application/xml",
+                "application/json",
+                "application/vnd.sdmx.structure+xml;version=2.1",
+                "application/vnd.sdmx.structure+json;version=1.0.0"
+            ],
+            "denied_accept_headers": []
+        },
+        "response_content_types": [
+            "application/xml;charset=UTF-8",
+            "application/xml;charset=UTF-8",
+            "application/xml;charset=UTF-8",
+            "application/xml;charset=UTF-8"
+        ],
+        "elapsed": []
+    },
+    {
+        "id": "SPC",
+        "url": "https://stats-nsi-stable.pacificdata.org/rest",
+        "name": "Pacific Data Hub DotStat by The Pacific Community (SPC)",
+        "supports": {
+            "provisionagreement": false
+        },
+        "documentation": "https://docs.pacificdata.org/dotstat",
+        "structural_accept": {
+            "supported_accept_headers": [
+                "application/xml",
+                "application/json",
+                "application/vnd.sdmx.structure+xml;version=2.1",
+                "application/vnd.sdmx.structure+json;version=1.0.0"
+            ],
+            "denied_accept_headers": []
+        },
+        "response_content_types": [
+            "application/json; charset=utf-8",
+            "application/json; charset=utf-8",
+            "application/json; charset=utf-8",
+            "application/json; charset=utf-8"
+        ],
+        "elapsed": []
+    },
+    {
+        "id": "UNESCO",
+        "url": "http://api.uis.unesco.org/sdmx",
+        "name": "UN Educational, Scientific and Cultural Organization",
+        "supports": {
+            "datastructure": false
+        },
+        "headers": {
+            "Accept": "application/vnd.sdmx.structure+xml;version=2.1"
+        },
+        "structural_accept": {
+            "supported_accept_headers": [],
+            "denied_accept_headers": [
+                "application/xml",
+                "application/json",
+                "application/vnd.sdmx.structure+xml;version=2.1",
+                "application/vnd.sdmx.structure+json;version=1.0.0"
+            ]
+        },
+        "response_content_types": [
+            "application/json",
+            "application/json",
+            "application/json",
+            "application/json"
+        ],
+        "elapsed": []
+    },
+    {
+        "id": "UNICEF",
+        "url": "https://sdmx.data.unicef.org/ws/public/sdmxapi/rest",
+        "name": "UN Children's Fund",
+        "supports": {
+            "structure-specific data": true
+        },
+        "structural_accept": {
+            "supported_accept_headers": [
+                "application/xml",
+                "application/json",
+                "application/vnd.sdmx.structure+xml;version=2.1",
+                "application/vnd.sdmx.structure+json;version=1.0.0"
+            ],
+            "denied_accept_headers": []
+        },
+        "response_content_types": [
+            "application/xml;charset=UTF-8",
+            "application/xml;charset=UTF-8",
+            "application/xml;charset=UTF-8",
+            "application/xml;charset=UTF-8"
+        ],
+        "elapsed": []
     }
 ]
