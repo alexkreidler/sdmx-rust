@@ -675,6 +675,7 @@ name = "sdmxblaze"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "http",
  "querystring",
  "reqwest",
  "serde",
