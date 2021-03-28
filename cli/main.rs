@@ -126,44 +126,6 @@ mod tests {
 
     #[test]
     fn modification_sources() -> Result<()> {
-        let sources = fs::read_to_string("./sources.json")?;
-
-        let res: Sources = serde_json::from_str(&sources)?;
-
-        let mut out_sources = res;
-
-        let ref mut source = out_sources[1];
-
-        println!("{:#?}", source);
-
-        let accept = "application/vnd.sdmx.structure+xml;version=2.1";
-        let mvr = StatusCode::OK;
-
-        if source.structural_accept.as_mut().is_none() {
-            source.structural_accept = Some(Accept {
-                supported_accept_headers: Vec::new(),
-                denied_accept_headers: Vec::new(),
-            })
-        }
-        match mvr {
-            StatusCode::OK => source
-                .structural_accept
-                .as_mut()
-                // I was worried this unwrap might do something weird here because
-                // it is described as "consuming the value" but its fine
-                .unwrap()
-                .supported_accept_headers
-                .push(accept.into()),
-            _ => source
-                .structural_accept
-                .as_mut()
-                .unwrap()
-                .denied_accept_headers
-                .push(accept.into()),
-        }
-
-        println!("{:#?}", source);
-
         Ok(())
     }
 }

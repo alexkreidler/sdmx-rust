@@ -3,7 +3,7 @@ use std::{fmt::Debug, time::Duration};
 
 pub type Sources = Vec<Source>;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Source {
     pub id: String,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -30,7 +30,7 @@ pub struct Source {
     pub elapsed: Vec<Duration>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Accept {
     /// Accept headers with 200 status
     pub supported_accept_headers: Vec<String>,
@@ -39,13 +39,13 @@ pub struct Accept {
     pub denied_accept_headers: Vec<String>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Headers {
     #[serde(rename = "Accept")]
     pub accept: String,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Supports {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub preview: Option<bool>,
