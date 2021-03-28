@@ -5,7 +5,7 @@ use sdmxblaze::{
     queries::metadata_query,
     sdmx_sources::{Accept, Source, Sources},
 };
-use std::fs;
+use std::{fs, time::Instant};
 
 use http::StatusCode;
 use url::Url;
@@ -51,13 +51,18 @@ async fn main() -> Result<()> {
         let mut a = 0;
         for accept in accepts {
             a += 1;
-            println!("Req {}", a);
+
+            let start = Instant::now();
             let resp = reqwest::Client::new()
                 .get(&url)
                 .header("Accept", accept)
                 .send()
                 .await?;
 
+            let duration = start.elapsed();
+            source.elapsed.push(duration);
+
+            println!("Req {}, {:?}", a, duration);
             // println!("{:#?}", resp);
 
             if source.structural_accept.as_mut().is_none() {

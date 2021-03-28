@@ -28,3 +28,26 @@ ABS was thus kept with the new endpoint and the others were removed.
 ### Analysis of metadata result formats
 
 ### Response time analysis
+
+<!-- debug(datum.elapsed.secs+datum.elapsed.nanos) -->
+
+Run serve statically with CORS enabled: `serve -s -C .`
+
+```
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Average request duration for SDMX endpoints",
+  "data": {"url": "http://localhost:5000/out.json"},
+  "mark": "bar",
+  "transform": [
+    {"flatten": ["elapsed"]},
+    {"calculate": "datum.elapsed.secs+datum.elapsed.nanos*10e-9", "as": "duration"}
+  ],
+  "encoding": {
+    "x": {"field": "id", "type": "nominal", "title": "Statistical organization"},
+    "y": {"field": "duration", "type": "quantitative", "aggregate": "average"}
+  }
+}
+```
+
+![Chart of SDMX Response Times](./images/sdmx-response-times.svg)
