@@ -1,0 +1,35 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": "Received response types for SDMX metadata endpoints",
+    "data": {
+        "url": "http://localhost:5000/out.json"
+    },
+    "mark": "bar",
+    "transform": [
+        {
+            "flatten": [
+                "response_content_types"
+            ],
+            "as": [
+                "supported"
+            ]
+        },
+        {
+            "calculate": "split(split(datum.supported, '/')[1], ';')[0]",
+            "as": "typ"
+        }
+    ],
+    "encoding": {
+        "x": {
+            "field": "id",
+            "type": "ordinal",
+            "sort": "-y",
+            "title": "Statistical organization"
+        },
+        "y": {
+            "field": "typ",
+            "type": "nominal",
+            "title": "Response Content type"
+        }
+    }
+}
