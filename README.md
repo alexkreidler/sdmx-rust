@@ -42,3 +42,7 @@ Surprisingly, all endpoints support JSON metadata except for ECB and INSEE. Beca
 ![Chart of SDMX Response Times](./images/sdmx-response-times.svg)
 
 It appears that IMF, UNESCO, and WB have the fastest SDMX endpoint responses. However, this is only based on the `dataflow` metadata request, and it may differ for other metadata requests and data requests.
+
+## Next steps
+
+Testing APIs: IMF, WB, and WB_WDI
