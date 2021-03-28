@@ -1,7 +1,7 @@
 use reqwest::Client;
 
-use crate::{queries::metadata_query, reqwest_warc::write_response};
-use anyhow::Result;
+use crate::{queries::metadata_query, reqwest_warc::write_warc};
+use anyhow::{Context, Result};
 use std::time::Instant;
 use std::{convert::TryFrom, string::ToString};
 use url::Url;
@@ -18,16 +18,19 @@ pub async fn get_dataflows<T: ToString>(endpoint: T) -> Result<()> {
     let url = path_url.to_string();
 
     let start = Instant::now();
-    let resp = Client::new()
+    let client = Client::new();
+    let req = client
         .get(&url)
         .header("Accept", "application/json")
-        .send()
+        .build()?;
+    let resp = client
+        .execute(req.try_clone().context("Failed to clone request")?)
         .await?;
 
     let duration = start.elapsed();
 
     let wr_start = Instant::now();
-    write_response(resp).await?;
+    write_warc(req, resp).await?;
     let wr_duration = wr_start.elapsed();
 
     println!(
@@ -47,20 +50,20 @@ pub async fn get_dataflow<T: ToString>(endpoint: T, dataflow: T) -> Result<()> {
     let path_url = Url::try_from(base_url.as_str())?
         .join(metadata_query(paths).as_str())?;
 
-    let url = path_url.to_string();
+    // let url = path_url.to_string();
 
-    let start = Instant::now();
-    let resp = Client::new()
-        .get(&url)
-        .header("Accept", "application/json")
-        .send()
-        .await?;
+    // let start = Instant::now();
+    // let resp = Client::new()
+    //     .get(&url)
+    //     .header("Accept", "application/json")
+    //     .send()
+    //     .await?;
 
-    write_response(resp).await?;
+    // write_response(resp).await?;
 
-    let duration = start.elapsed();
+    // let duration = start.elapsed();
 
-    println!("Req {}, {:?}", base_url, duration);
+    // println!("Req {}, {:?}", base_url, duration);
     Ok(())
 }
 

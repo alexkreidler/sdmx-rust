@@ -19,41 +19,36 @@ pub fn serialize_headers(headers: &HeaderMap) -> String {
     each.join("\r\n")
 }
 
-pub async fn write_request(req: reqwest::Request) -> anyhow::Result<()> {
-    let bd = req.body().ok_or(anyhow!("No body"))?;
+// TODO: rather than a tuple with just the record and URL, maybe preserve other metadata
+// Maybe return own request
+pub async fn crate_warc_request(req: reqwest::Request) -> Result<Record> {
+    let empty: [u8; 0] = [];
+    let bd = match req.body() {
+        Some(b) => b
+            .as_bytes()
+            .ok_or(anyhow!("Could not convert request body to bytes"))?,
+        None => &empty,
+    };
 
     let headers = req.headers().clone();
 
-    write_warc(
-        req.url().clone(),
-        RecordType::Request,
-        &headers,
-        bd.as_bytes()
-            .ok_or(anyhow!("Could not convert request body to bytes"))?,
-    )
-    .await?;
-
-    Ok(())
+    Ok(create_warc(RecordType::Request, &headers, bd)?)
 }
 
-pub async fn write_response(res: reqwest::Response) -> Result<()> {
+pub async fn crate_warc_response(res: reqwest::Response) -> Result<Record> {
     let headers = res.headers().clone();
-    let res_url = res.url().clone();
 
     let body = res.text().await?;
     let bd = body.as_bytes();
 
-    write_warc(res_url, RecordType::Response, &headers, bd).await?;
-
-    Ok(())
+    Ok(create_warc(RecordType::Response, &headers, bd)?)
 }
 
-pub async fn write_warc(
-    url: url::Url,
+fn create_warc(
     typ: RecordType,
     headers: &HeaderMap,
     body: &[u8],
-) -> Result<()> {
+) -> Result<Record> {
     let out_headers = serialize_headers(headers);
 
     // https://users.rust-lang.org/t/what-is-right-ways-to-concat-strings/3780/3
@@ -62,11 +57,26 @@ pub async fn write_warc(
     // https://stackoverflow.com/questions/40792801/best-way-to-concatenate-vectors-in-rust
     let warc_body = [before, body].concat();
 
+    // Record ID
+    let id = Ulid::new().to_string();
+
+    let mut record = Record::default();
+    record.set_warc_version("1.1");
+    record.set_warc_id(id);
+    record.set_warc_type(typ);
+    record.replace_body(warc_body);
+
+    Ok(record)
+}
+
+pub fn write_warc_file(url: url::Url, records: Vec<Record>) -> Result<()> {
+    // WARC File ID
+    let id = Ulid::new().to_string();
+
     // Write WARC File
     let dir = "./warc-out";
     std::fs::create_dir_all(dir)?;
 
-    let id = Ulid::new().to_string();
     let fname = vec![
         cdx_url_canonical(url)? + "-" + id.as_str(),
         "warc".to_string(),
@@ -78,13 +88,23 @@ pub async fn write_warc(
         .open(path::Path::new(dir).join(fname))?;
     let mut writer = WarcWriter::new(file);
 
-    let mut record = Record::default();
-    record.set_warc_version("1.1");
-    record.set_warc_id(id);
-    record.set_warc_type(typ);
-    record.replace_body(warc_body);
-
-    writer.write(&record)?;
-
+    for record in records {
+        writer.write(&record)?;
+    }
     Ok(())
+}
+
+pub async fn write_warc(
+    req: reqwest::Request,
+    res: reqwest::Response,
+) -> Result<()> {
+    if req.url() != res.url() {
+        return Err(anyhow!("URLs on request and response are not equal"));
+    }
+    let req_url = req.url().clone();
+    let records = vec![
+        crate_warc_request(req).await?,
+        crate_warc_response(res).await?,
+    ];
+    write_warc_file(req_url, records)
 }
