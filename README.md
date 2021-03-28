@@ -14,6 +14,12 @@ Goals:
 
 ## Survey results
 
+To run the following Vega analyses, you must:
+
+Run `serve` from NPM with CORS and static serving enabled: `serve -s -C .`
+
+Then you can paste the Vega specs into the [Vega Editor](https://vega.github.io/editor/)
+
 ### Nonstandard Metadata APIs
 
 ABS, NBB, OECD, and STAT_EE used software based on an OECD project that generally offered the data in SDMX-compliant formats but had its own REST API for the metadata.
@@ -27,27 +33,12 @@ ABS was thus kept with the new endpoint and the others were removed.
 
 ### Analysis of metadata result formats
 
+![Chart of SDMX Response Formats](./images/sdmx-response-formats.svg)
+
+Surprisingly, all endpoints support JSON metadata except for ECB and INSEE. Because we already have Rust types for JSON, we may simply build out the rest of this crawler without having to deal with the complexities of XML->Rust types conversion.
+
 ### Response time analysis
 
-<!-- debug(datum.elapsed.secs+datum.elapsed.nanos) -->
-
-Run serve statically with CORS enabled: `serve -s -C .`
-
-```
-{
-  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": "Average request duration for SDMX endpoints",
-  "data": {"url": "http://localhost:5000/out.json"},
-  "mark": "bar",
-  "transform": [
-    {"flatten": ["elapsed"]},
-    {"calculate": "datum.elapsed.secs+datum.elapsed.nanos*10e-9", "as": "duration"}
-  ],
-  "encoding": {
-    "x": {"field": "id", "type": "nominal", "title": "Statistical organization"},
-    "y": {"field": "duration", "type": "quantitative", "aggregate": "average"}
-  }
-}
-```
-
 ![Chart of SDMX Response Times](./images/sdmx-response-times.svg)
+
+It appears that IMF, UNESCO, and WB have the fastest SDMX endpoint responses. However, this is only based on the `dataflow` metadata request, and it may differ for other metadata requests and data requests.
