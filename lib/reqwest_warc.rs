@@ -98,8 +98,12 @@ pub async fn write_warc(
     req: reqwest::Request,
     res: reqwest::Response,
 ) -> Result<()> {
-    if req.url() != res.url() {
-        return Err(anyhow!("URLs on request and response are not equal"));
+    if req.url() != res.url() && res.url().scheme() != "https" {
+        println!(
+            "URLs on request and response are not equal, second not https. req: {:?}, res: {:?}",
+            req.url().to_string(),
+            res.url().to_string()
+        );
     }
     let req_url = req.url().clone();
     let records = vec![

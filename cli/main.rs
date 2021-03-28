@@ -111,9 +111,12 @@ async fn main() -> Result<()> {
         println!("{:#?}", source);
         Ok(source)
     }
+    let test_sources: Vec<String> =
+        ["IMF".to_string(), "WB".to_string(), "UNSD".to_string()].to_vec();
 
     let output: Vec<_> = out_sources
         .iter_mut()
+        // .filter(|source| test_sources.contains(&source.id))
         .map(|source| handle_source(source))
         .collect();
 

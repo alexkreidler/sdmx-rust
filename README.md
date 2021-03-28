@@ -46,3 +46,9 @@ It appears that IMF, UNESCO, and WB have the fastest SDMX endpoint responses. Ho
 ## Next steps
 
 Testing APIs: IMF, WB, and WB_WDI
+
+It seems that JSON support for metadata is not as widespread as thought before.
+
+Investigate XMLPath and JSONPath to simply extract dataset information.
+
+Try to load an initial batch into TypeSense.
