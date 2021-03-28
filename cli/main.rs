@@ -3,7 +3,7 @@ use anyhow::{anyhow, Result};
 
 use sdmxblaze::{
     queries::metadata_query,
-    sdmx_sources::{Accept, Sources},
+    sdmx_sources::{Accept, Source, Sources},
 };
 use std::fs;
 
@@ -24,7 +24,7 @@ async fn main() -> Result<()> {
 
     let mut out_sources = res;
 
-    for ref mut source in out_sources {
+    async fn handle_source(source: &mut Source) -> Result<&mut Source> {
         // DATA QUERIES
         let base_url = Url::parse(format!("{}/", &source.url).as_str())?;
 
@@ -39,6 +39,7 @@ async fn main() -> Result<()> {
 
         let accepts = vec![
             "application/xml",
+            "application/json",
             "application/vnd.sdmx.structure+xml;version=2.1",
             "application/vnd.sdmx.structure+json;version=1.0.0",
             // "application/vnd.sdmx.genericmetadata+xml;version=2.1",
@@ -47,14 +48,17 @@ async fn main() -> Result<()> {
             // "application/vnd.sdmx.data+csv;version=1.0.0",
         ];
 
+        let mut a = 0;
         for accept in accepts {
+            a += 1;
+            println!("Req {}", a);
             let resp = reqwest::Client::new()
                 .get(&url)
                 .header("Accept", accept)
                 .send()
                 .await?;
 
-            println!("{:#?}", resp);
+            // println!("{:#?}", resp);
 
             if source.structural_accept.as_mut().is_none() {
                 source.structural_accept = Some(Accept {
@@ -78,11 +82,30 @@ async fn main() -> Result<()> {
                     .push(accept.into()),
             }
 
-            let mut out = resp.text().await?;
+            // let mut out = resp.text().await?;
             // out.truncate(200);
-            println!("{}", out);
+            // println!("{}", out);
         }
+
+        println!("{:#?}", source);
+        Ok(source)
     }
+
+    let output: Vec<_> = out_sources
+        .iter_mut()
+        .map(|source| handle_source(source))
+        .collect();
+
+    let mut next = Vec::new();
+    for fut in output {
+        let n = fut.await?;
+        next.push(n)
+    }
+
+    // let next = &output?;
+    let fin = serde_json::to_string(&next)?;
+
+    fs::write("./out.json", fin)?;
 
     Ok(())
 }
