@@ -2,17 +2,18 @@
     {
         "id": "ABS",
         "data_content_type": "JSON",
-        "url": "http://stat.data.abs.gov.au/sdmx-json",
+        "url": "https://api.data.abs.gov.au",
         "name": "Australian Bureau of Statistics",
         "supports": null,
         "documentation": null,
         "headers": null,
         "structural_accept": {
-            "supported_accept_headers": [],
-            "denied_accept_headers": [
+            "supported_accept_headers": [
                 "application/xml",
                 "application/json",
-                "application/vnd.sdmx.structure+xml;version=2.1",
+                "application/vnd.sdmx.structure+xml;version=2.1"
+            ],
+            "denied_accept_headers": [
                 "application/vnd.sdmx.structure+json;version=1.0.0"
             ]
         },
@@ -224,44 +225,6 @@
         "data_accept": null
     },
     {
-        "id": "NBB",
-        "data_content_type": "JSON",
-        "url": "https://stat.nbb.be/sdmx-json",
-        "name": "National Bank of Belgium",
-        "supports": null,
-        "documentation": "https://www.nbb.be/doc/dq/migratie_belgostat/en/nbb_stat-technical-manual.pdf",
-        "headers": null,
-        "structural_accept": {
-            "supported_accept_headers": [],
-            "denied_accept_headers": [
-                "application/xml",
-                "application/json",
-                "application/vnd.sdmx.structure+xml;version=2.1",
-                "application/vnd.sdmx.structure+json;version=1.0.0"
-            ]
-        },
-        "data_accept": null
-    },
-    {
-        "id": "OECD",
-        "data_content_type": "JSON",
-        "url": "https://stats.oecd.org/SDMX-JSON",
-        "name": "Organisation for Economic Co-operation and Development",
-        "supports": null,
-        "documentation": null,
-        "headers": null,
-        "structural_accept": {
-            "supported_accept_headers": [],
-            "denied_accept_headers": [
-                "application/xml",
-                "application/json",
-                "application/vnd.sdmx.structure+xml;version=2.1",
-                "application/vnd.sdmx.structure+json;version=1.0.0"
-            ]
-        },
-        "data_accept": null
-    },
-    {
         "id": "NB",
         "data_content_type": null,
         "url": "https://data.norges-bank.no/api",
@@ -335,25 +298,6 @@
                 "application/vnd.sdmx.structure+xml;version=2.1"
             ],
             "denied_accept_headers": [
-                "application/vnd.sdmx.structure+json;version=1.0.0"
-            ]
-        },
-        "data_accept": null
-    },
-    {
-        "id": "STAT_EE",
-        "data_content_type": "JSON",
-        "url": "http://andmebaas.stat.ee/sdmx-json",
-        "name": "Statistics Estonia",
-        "supports": null,
-        "documentation": "https://www.stat.ee/sites/default/files/2020-09/API-instructions.pdf",
-        "headers": null,
-        "structural_accept": {
-            "supported_accept_headers": [],
-            "denied_accept_headers": [
-                "application/xml",
-                "application/json",
-                "application/vnd.sdmx.structure+xml;version=2.1",
                 "application/vnd.sdmx.structure+json;version=1.0.0"
             ]
         },
