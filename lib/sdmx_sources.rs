@@ -21,6 +21,9 @@ pub struct Source {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub structural_accept: Option<Accept>,
 
+    #[serde(default)]
+    pub response_content_types: Vec<String>,
+
     /// Accept headers for data queries
     #[serde(skip_serializing_if = "Option::is_none")]
     pub data_accept: Option<Accept>,

@@ -8,30 +8,18 @@
             "supported_accept_headers": [
                 "application/xml",
                 "application/json",
-                "application/vnd.sdmx.structure+xml;version=2.1"
-            ],
-            "denied_accept_headers": [
+                "application/vnd.sdmx.structure+xml;version=2.1",
                 "application/vnd.sdmx.structure+json;version=1.0.0"
-            ]
+            ],
+            "denied_accept_headers": []
         },
-        "elapsed": [
-            {
-                "secs": 6,
-                "nanos": 253856773
-            },
-            {
-                "secs": 3,
-                "nanos": 855548438
-            },
-            {
-                "secs": 6,
-                "nanos": 498936104
-            },
-            {
-                "secs": 1,
-                "nanos": 83152080
-            }
-        ]
+        "response_content_types": [
+            "application/json; charset=utf-8",
+            "application/json; charset=utf-8",
+            "application/json; charset=utf-8",
+            "application/json; charset=utf-8"
+        ],
+        "elapsed": []
     },
     {
         "id": "ECB",
@@ -41,33 +29,21 @@
             "preview": true
         },
         "structural_accept": {
-            "supported_accept_headers": [
-                "application/xml",
-                "application/vnd.sdmx.structure+xml;version=2.1"
-            ],
+            "supported_accept_headers": [],
             "denied_accept_headers": [
+                "application/xml",
                 "application/json",
+                "application/vnd.sdmx.structure+xml;version=2.1",
                 "application/vnd.sdmx.structure+json;version=1.0.0"
             ]
         },
-        "elapsed": [
-            {
-                "secs": 0,
-                "nanos": 470648546
-            },
-            {
-                "secs": 0,
-                "nanos": 380586601
-            },
-            {
-                "secs": 0,
-                "nanos": 393260113
-            },
-            {
-                "secs": 0,
-                "nanos": 367172586
-            }
-        ]
+        "response_content_types": [
+            "application/json;charset=utf-8",
+            "application/json;charset=utf-8",
+            "application/json;charset=utf-8",
+            "application/json;charset=utf-8"
+        ],
+        "elapsed": []
     },
     {
         "id": "ESTAT",
@@ -90,24 +66,13 @@
                 "application/vnd.sdmx.structure+json;version=1.0.0"
             ]
         },
-        "elapsed": [
-            {
-                "secs": 0,
-                "nanos": 229136927
-            },
-            {
-                "secs": 0,
-                "nanos": 219887140
-            },
-            {
-                "secs": 0,
-                "nanos": 216127367
-            },
-            {
-                "secs": 0,
-                "nanos": 212905877
-            }
-        ]
+        "response_content_types": [
+            "text/html; charset=UTF-8",
+            "text/html; charset=UTF-8",
+            "text/html; charset=UTF-8",
+            "text/html; charset=UTF-8"
+        ],
+        "elapsed": []
     },
     {
         "id": "ILO",
@@ -128,24 +93,13 @@
                 "application/vnd.sdmx.structure+json;version=1.0.0"
             ]
         },
-        "elapsed": [
-            {
-                "secs": 0,
-                "nanos": 329676570
-            },
-            {
-                "secs": 0,
-                "nanos": 231270053
-            },
-            {
-                "secs": 0,
-                "nanos": 230624687
-            },
-            {
-                "secs": 0,
-                "nanos": 228123632
-            }
-        ]
+        "response_content_types": [
+            "application/xml",
+            "application/xml",
+            "application/xml",
+            "application/xml"
+        ],
+        "elapsed": []
     },
     {
         "id": "IMF",
@@ -158,68 +112,18 @@
             "supported_accept_headers": [
                 "application/xml",
                 "application/json",
-                "application/vnd.sdmx.structure+xml;version=2.1"
-            ],
-            "denied_accept_headers": [
+                "application/vnd.sdmx.structure+xml;version=2.1",
                 "application/vnd.sdmx.structure+json;version=1.0.0"
-            ]
-        },
-        "elapsed": [
-            {
-                "secs": 0,
-                "nanos": 101889179
-            },
-            {
-                "secs": 0,
-                "nanos": 80829078
-            },
-            {
-                "secs": 0,
-                "nanos": 76536402
-            },
-            {
-                "secs": 0,
-                "nanos": 61791077
-            }
-        ]
-    },
-    {
-        "id": "INEGI",
-        "url": "http://sdmx.snieg.mx/service/rest",
-        "name": "Instituto Nacional de Estadística y Geografía (MX)",
-        "supports": {
-            "agencyscheme": false,
-            "provisionagreement": false,
-            "structure-specific data": true
-        },
-        "structural_accept": {
-            "supported_accept_headers": [
-                "application/xml",
-                "application/json",
-                "application/vnd.sdmx.structure+xml;version=2.1"
             ],
-            "denied_accept_headers": [
-                "application/vnd.sdmx.structure+json;version=1.0.0"
-            ]
+            "denied_accept_headers": []
         },
-        "elapsed": [
-            {
-                "secs": 1,
-                "nanos": 47102476
-            },
-            {
-                "secs": 0,
-                "nanos": 681868829
-            },
-            {
-                "secs": 0,
-                "nanos": 621406672
-            },
-            {
-                "secs": 0,
-                "nanos": 540453306
-            }
-        ]
+        "response_content_types": [
+            "application/xml;charset=UTF-8",
+            "application/xml;charset=UTF-8",
+            "application/xml;charset=UTF-8",
+            "application/xml;charset=UTF-8"
+        ],
+        "elapsed": []
     },
     {
         "id": "INSEE",
@@ -232,33 +136,21 @@
             "Accept": "application/vnd.sdmx.genericdata+xml;version=2.1"
         },
         "structural_accept": {
-            "supported_accept_headers": [
-                "application/xml",
-                "application/vnd.sdmx.structure+xml;version=2.1"
-            ],
+            "supported_accept_headers": [],
             "denied_accept_headers": [
+                "application/xml",
                 "application/json",
+                "application/vnd.sdmx.structure+xml;version=2.1",
                 "application/vnd.sdmx.structure+json;version=1.0.0"
             ]
         },
-        "elapsed": [
-            {
-                "secs": 0,
-                "nanos": 493653343
-            },
-            {
-                "secs": 0,
-                "nanos": 475167373
-            },
-            {
-                "secs": 0,
-                "nanos": 477883240
-            },
-            {
-                "secs": 0,
-                "nanos": 472949480
-            }
-        ]
+        "response_content_types": [
+            "application/json",
+            "application/json",
+            "application/json",
+            "application/json"
+        ],
+        "elapsed": []
     },
     {
         "id": "ISTAT",
@@ -272,30 +164,18 @@
             "supported_accept_headers": [
                 "application/xml",
                 "application/json",
-                "application/vnd.sdmx.structure+xml;version=2.1"
-            ],
-            "denied_accept_headers": [
+                "application/vnd.sdmx.structure+xml;version=2.1",
                 "application/vnd.sdmx.structure+json;version=1.0.0"
-            ]
+            ],
+            "denied_accept_headers": []
         },
-        "elapsed": [
-            {
-                "secs": 0,
-                "nanos": 575021379
-            },
-            {
-                "secs": 0,
-                "nanos": 581442224
-            },
-            {
-                "secs": 0,
-                "nanos": 550014735
-            },
-            {
-                "secs": 0,
-                "nanos": 227808471
-            }
-        ]
+        "response_content_types": [
+            "application/json; charset=utf-8",
+            "application/json; charset=utf-8",
+            "application/json; charset=utf-8",
+            "application/json; charset=utf-8"
+        ],
+        "elapsed": []
     },
     {
         "id": "NB",
@@ -317,24 +197,13 @@
             ],
             "denied_accept_headers": []
         },
-        "elapsed": [
-            {
-                "secs": 0,
-                "nanos": 631981637
-            },
-            {
-                "secs": 0,
-                "nanos": 451352023
-            },
-            {
-                "secs": 0,
-                "nanos": 451461492
-            },
-            {
-                "secs": 0,
-                "nanos": 567398534
-            }
-        ]
+        "response_content_types": [
+            "application/xml;charset=UTF-8",
+            "application/xml;charset=UTF-8",
+            "application/xml;charset=UTF-8",
+            "application/xml;charset=UTF-8"
+        ],
+        "elapsed": []
     },
     {
         "id": "SGR",
@@ -344,30 +213,18 @@
             "supported_accept_headers": [
                 "application/xml",
                 "application/json",
-                "application/vnd.sdmx.structure+xml;version=2.1"
-            ],
-            "denied_accept_headers": [
+                "application/vnd.sdmx.structure+xml;version=2.1",
                 "application/vnd.sdmx.structure+json;version=1.0.0"
-            ]
+            ],
+            "denied_accept_headers": []
         },
-        "elapsed": [
-            {
-                "secs": 0,
-                "nanos": 441122402
-            },
-            {
-                "secs": 0,
-                "nanos": 411870495
-            },
-            {
-                "secs": 0,
-                "nanos": 411414201
-            },
-            {
-                "secs": 0,
-                "nanos": 398701474
-            }
-        ]
+        "response_content_types": [
+            "application/xml;charset=UTF-8",
+            "application/xml;charset=UTF-8",
+            "application/xml;charset=UTF-8",
+            "application/xml;charset=UTF-8"
+        ],
+        "elapsed": []
     },
     {
         "id": "SPC",
@@ -381,30 +238,18 @@
             "supported_accept_headers": [
                 "application/xml",
                 "application/json",
-                "application/vnd.sdmx.structure+xml;version=2.1"
-            ],
-            "denied_accept_headers": [
+                "application/vnd.sdmx.structure+xml;version=2.1",
                 "application/vnd.sdmx.structure+json;version=1.0.0"
-            ]
+            ],
+            "denied_accept_headers": []
         },
-        "elapsed": [
-            {
-                "secs": 1,
-                "nanos": 654036024
-            },
-            {
-                "secs": 1,
-                "nanos": 554671381
-            },
-            {
-                "secs": 1,
-                "nanos": 589666330
-            },
-            {
-                "secs": 1,
-                "nanos": 213441824
-            }
-        ]
+        "response_content_types": [
+            "application/json; charset=utf-8",
+            "application/json; charset=utf-8",
+            "application/json; charset=utf-8",
+            "application/json; charset=utf-8"
+        ],
+        "elapsed": []
     },
     {
         "id": "UNESCO",
@@ -425,24 +270,13 @@
                 "application/vnd.sdmx.structure+json;version=1.0.0"
             ]
         },
-        "elapsed": [
-            {
-                "secs": 0,
-                "nanos": 64596244
-            },
-            {
-                "secs": 0,
-                "nanos": 23193256
-            },
-            {
-                "secs": 0,
-                "nanos": 24655773
-            },
-            {
-                "secs": 0,
-                "nanos": 24580325
-            }
-        ]
+        "response_content_types": [
+            "application/json",
+            "application/json",
+            "application/json",
+            "application/json"
+        ],
+        "elapsed": []
     },
     {
         "id": "UNICEF",
@@ -460,133 +294,12 @@
             ],
             "denied_accept_headers": []
         },
-        "elapsed": [
-            {
-                "secs": 0,
-                "nanos": 435003541
-            },
-            {
-                "secs": 0,
-                "nanos": 411207012
-            },
-            {
-                "secs": 0,
-                "nanos": 393430628
-            },
-            {
-                "secs": 0,
-                "nanos": 399913362
-            }
-        ]
-    },
-    {
-        "id": "UNSD",
-        "url": "http://data.un.org/WS/rest",
-        "name": "United Nations Statistics Division",
-        "supports": {
-            "preview": true,
-            "provisionagreement": false
-        },
-        "structural_accept": {
-            "supported_accept_headers": [
-                "application/xml",
-                "application/json",
-                "application/vnd.sdmx.structure+xml;version=2.1"
-            ],
-            "denied_accept_headers": [
-                "application/vnd.sdmx.structure+json;version=1.0.0"
-            ]
-        },
-        "elapsed": [
-            {
-                "secs": 0,
-                "nanos": 753111497
-            },
-            {
-                "secs": 0,
-                "nanos": 669869368
-            },
-            {
-                "secs": 0,
-                "nanos": 645145189
-            },
-            {
-                "secs": 0,
-                "nanos": 645260303
-            }
-        ]
-    },
-    {
-        "id": "WB",
-        "url": "http://wits.worldbank.org/API/V1/SDMX/V21/rest",
-        "name": "World Bank World Integrated Trade Solution",
-        "supports": {
-            "agencyscheme": false,
-            "provisionagreement": false
-        },
-        "structural_accept": {
-            "supported_accept_headers": [
-                "application/xml",
-                "application/json",
-                "application/vnd.sdmx.structure+xml;version=2.1"
-            ],
-            "denied_accept_headers": [
-                "application/vnd.sdmx.structure+json;version=1.0.0"
-            ]
-        },
-        "elapsed": [
-            {
-                "secs": 0,
-                "nanos": 134994269
-            },
-            {
-                "secs": 0,
-                "nanos": 120933819
-            },
-            {
-                "secs": 0,
-                "nanos": 84416310
-            },
-            {
-                "secs": 0,
-                "nanos": 62440632
-            }
-        ]
-    },
-    {
-        "id": "WB_WDI",
-        "url": "http://api.worldbank.org/v2/sdmx/rest",
-        "name": "World Bank World Development Indicators",
-        "supports": {
-            "provisionagreement": false,
-            "structure-specific data": true
-        },
-        "structural_accept": {
-            "supported_accept_headers": [
-                "application/xml",
-                "application/json",
-                "application/vnd.sdmx.structure+xml;version=2.1",
-                "application/vnd.sdmx.structure+json;version=1.0.0"
-            ],
-            "denied_accept_headers": []
-        },
-        "elapsed": [
-            {
-                "secs": 0,
-                "nanos": 166882178
-            },
-            {
-                "secs": 0,
-                "nanos": 129403793
-            },
-            {
-                "secs": 0,
-                "nanos": 122460439
-            },
-            {
-                "secs": 0,
-                "nanos": 129431313
-            }
-        ]
+        "response_content_types": [
+            "application/xml;charset=UTF-8",
+            "application/xml;charset=UTF-8",
+            "application/xml;charset=UTF-8",
+            "application/xml;charset=UTF-8"
+        ],
+        "elapsed": []
     }
 ]

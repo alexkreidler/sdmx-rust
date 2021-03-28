@@ -1,8 +1,10 @@
-use anyhow::{anyhow, Result};
+use anyhow::{anyhow, Context, Result};
 // use std::collections::HashMap;
 
+use reqwest::Client;
 use sdmxblaze::{
     queries::metadata_query,
+    reqwest_warc::write_warc,
     sdmx_sources::{Accept, Source, Sources},
 };
 use std::{fs, time::Instant};
@@ -53,16 +55,17 @@ async fn main() -> Result<()> {
             a += 1;
 
             let start = Instant::now();
-            let resp = reqwest::Client::new()
+            let client = Client::new();
+            let req = client
                 .get(&url)
-                .header("Accept", accept)
-                .send()
+                .header("Accept", "application/json")
+                .build()?;
+            let resp = client
+                .execute(req.try_clone().context("Failed to clone request")?)
                 .await?;
 
             let duration = start.elapsed();
-            source.elapsed.push(duration);
 
-            println!("Req {}, {:?}", a, duration);
             // println!("{:#?}", resp);
 
             if source.structural_accept.as_mut().is_none() {
@@ -86,6 +89,19 @@ async fn main() -> Result<()> {
                     .denied_accept_headers
                     .push(accept.into()),
             }
+
+            source.response_content_types.push(
+                match resp.headers().get("Content-Type") {
+                    Some(c) => c.to_str()?.to_string(),
+                    None => "NONE".to_string(),
+                },
+            );
+
+            let wr_start = Instant::now();
+            write_warc(req, resp).await?;
+            let wr_duration = wr_start.elapsed();
+
+            println!("Req {}, {:?}, write dur {:?}", a, duration, wr_duration);
 
             // let mut out = resp.text().await?;
             // out.truncate(200);
