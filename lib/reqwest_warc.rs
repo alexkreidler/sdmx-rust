@@ -3,8 +3,10 @@
 use http::HeaderMap;
 use std::{fs::OpenOptions, path};
 use ulid::Ulid;
+use util::cdx_url_canonical;
 use warc::{Record, RecordType, WarcWriter};
 
+use crate::util;
 use anyhow::{anyhow, Result};
 
 pub fn serialize_headers(headers: &HeaderMap) -> String {
@@ -23,11 +25,7 @@ pub async fn write_request(req: reqwest::Request) -> anyhow::Result<()> {
     let headers = req.headers().clone();
 
     write_warc(
-        req.url()
-            .clone()
-            .host_str()
-            .ok_or(anyhow!("No host for request {:#?}", req))?
-            .to_string(),
+        req.url().clone(),
         RecordType::Request,
         &headers,
         bd.as_bytes()
@@ -45,22 +43,13 @@ pub async fn write_response(res: reqwest::Response) -> Result<()> {
     let body = res.text().await?;
     let bd = body.as_bytes();
 
-    write_warc(
-        res_url
-            .host_str()
-            .ok_or(anyhow!("No host for response"))?
-            .to_string(),
-        RecordType::Response,
-        &headers,
-        bd,
-    )
-    .await?;
+    write_warc(res_url, RecordType::Response, &headers, bd).await?;
 
     Ok(())
 }
 
 pub async fn write_warc(
-    hostname: String,
+    url: url::Url,
     typ: RecordType,
     headers: &HeaderMap,
     body: &[u8],
@@ -78,8 +67,11 @@ pub async fn write_warc(
     std::fs::create_dir_all(dir)?;
 
     let id = Ulid::new().to_string();
-    let fname =
-        vec![hostname + "-" + id.as_str(), "warc".to_string()].join(".");
+    let fname = vec![
+        cdx_url_canonical(url)? + "-" + id.as_str(),
+        "warc".to_string(),
+    ]
+    .join(".");
     let file = OpenOptions::new()
         .write(true)
         .create_new(true)
