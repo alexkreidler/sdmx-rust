@@ -321,6 +321,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "http-serde"
+version = "1.0.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "aaa9564ce1decf49edcbd2b8f4f732843b4df64eabb8dcfcf0085ff34dbc76a2"
+dependencies = [
+ "http",
+ "serde",
+]
+
+[[package]]
 name = "httparse"
 version = "1.3.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1007,6 +1017,7 @@ dependencies = [
  "chrono",
  "clap",
  "http",
+ "http-serde",
  "querystring",
  "reqwest",
  "serde",

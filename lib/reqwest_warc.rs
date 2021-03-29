@@ -6,7 +6,7 @@ use ulid::Ulid;
 use util::cdx_url_canonical;
 use warc::{Record, RecordType, WarcWriter};
 
-use crate::util;
+use crate::{reqwest_layer::Response, util};
 use anyhow::{anyhow, Result};
 
 pub fn serialize_headers(headers: &HeaderMap) -> String {
@@ -19,10 +19,10 @@ pub fn serialize_headers(headers: &HeaderMap) -> String {
     each.join("\r\n")
 }
 
+const empty: [u8; 0] = [];
 // TODO: rather than a tuple with just the record and URL, maybe preserve other metadata
 // Maybe return own request
 pub async fn crate_warc_request(req: reqwest::Request) -> Result<Record> {
-    let empty: [u8; 0] = [];
     let bd = match req.body() {
         Some(b) => b
             .as_bytes()
@@ -35,13 +35,16 @@ pub async fn crate_warc_request(req: reqwest::Request) -> Result<Record> {
     Ok(create_warc(RecordType::Request, &headers, bd)?)
 }
 
-pub async fn crate_warc_response(res: reqwest::Response) -> Result<Record> {
-    let headers = res.headers().clone();
-
-    let body = res.text().await?;
-    let bd = body.as_bytes();
-
-    Ok(create_warc(RecordType::Response, &headers, bd)?)
+pub async fn crate_warc_response(res: Response) -> Result<Record> {
+    Ok(create_warc(
+        RecordType::Response,
+        &res.headers,
+        res.body
+            .or(Some("".to_string()))
+            .unwrap()
+            .into_bytes()
+            .as_slice(),
+    )?)
 }
 
 fn create_warc(
@@ -55,7 +58,7 @@ fn create_warc(
     let fin = out_headers + "\r\n\r\n";
     let before = fin.as_bytes();
     // https://stackoverflow.com/questions/40792801/best-way-to-concatenate-vectors-in-rust
-    let warc_body = [before, body].concat();
+    let warc_body = [before, body.into()].concat();
 
     // Record ID
     let id = Ulid::new().to_string();
@@ -94,15 +97,16 @@ pub fn write_warc_file(url: url::Url, records: Vec<Record>) -> Result<()> {
     Ok(())
 }
 
-pub async fn write_warc(
+pub async fn write_warc<R: Into<Response>>(
     req: reqwest::Request,
-    res: reqwest::Response,
+    response: R,
 ) -> Result<()> {
-    if req.url() != res.url() && res.url().scheme() != "https" {
+    let res = response.into();
+    if req.url() != &res.url && res.url.scheme() != "https" {
         println!(
             "URLs on request and response are not equal, second not https. req: {:?}, res: {:?}",
             req.url().to_string(),
-            res.url().to_string()
+            res.url
         );
     }
     let req_url = req.url().clone();
