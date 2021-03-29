@@ -2,8 +2,11 @@ use http::{HeaderMap, HeaderValue};
 use reqwest::Client;
 
 use crate::{
-    minimal_structure::Dataflow, queries::metadata_query,
-    reqwest_layer::Response, reqwest_warc::write_warc, structure::Structure,
+    minimal_structure::Dataflow,
+    queries::metadata_query,
+    reqwest_layer::Response,
+    reqwest_warc::write_warc,
+    structure::{Data, Structure},
 };
 use anyhow::{anyhow, Context, Result};
 use std::{any::Any, time::Instant};
@@ -33,7 +36,7 @@ async fn make_request(
         write_warc(req, res.clone()).await?;
     }
 
-    println!("Req {:?} duration {:?}, write dur", req_url, duration);
+    println!("Req {:} duration {:?}, write dur", req_url, duration);
     Ok(res)
 }
 // pub struct Agent {}
@@ -41,14 +44,14 @@ async fn make_request(
 
 trait Stage {
     fn name(&self) -> String;
-    /// Get the URL relative to the base URL to request
+    /// Get the URI relative to the base URL to request
     /// `prior` is any prior stage data relevant to this one, serialized as JSON
-    fn get_url(&self, prior: Vec<String>) -> Result<Vec<url::Url>>;
+    fn get_uri(&self, prior: Vec<String>) -> Result<Vec<String>>;
 
     fn extract_relevant(&self, res: Response) -> Result<Vec<String>>;
 }
 
-fn validate_get_body(res: Response) -> Result<String> {
+fn validate_get_body(res: &Response) -> Result<&String> {
     let ct = res
         .headers
         .get(http::header::CONTENT_TYPE)
@@ -60,26 +63,35 @@ fn validate_get_body(res: Response) -> Result<String> {
     {
         return Err(anyhow!("Invalid content type {}", ct));
     }
-    let bd = res.body.ok_or_else(|| anyhow!("No body from response"))?;
+    let bd = res
+        .body
+        .as_ref()
+        .ok_or_else(|| anyhow!("No body from response"))?;
     Ok(bd)
 }
 
 struct DataflowStage {}
 
 impl Stage for DataflowStage {
-    fn get_url(&self, prior: Vec<String>) -> Result<Vec<url::Url>> {
+    fn get_uri(&self, prior: Vec<String>) -> Result<Vec<String>> {
         let paths = ["dataflow", "all", "all", "latest"].to_vec();
-        Ok(vec![Url::try_from(metadata_query(paths).as_str())
-            .context("Failed to parse URL")?])
+        Ok(vec![metadata_query(paths)])
     }
 
     fn extract_relevant(&self, res: Response) -> Result<Vec<String>> {
-        let bd = validate_get_body(res)?;
-        let s: Structure = serde_json::from_str(bd.as_str())?;
+        let bd = validate_get_body(&res)?;
+        let body = bd.as_str().trim().trim_start_matches('\u{feff}');
+        println!("{}", body);
+        let s: Data = serde_json::from_str(body).context(anyhow!(
+            "Failed to parse JSON from response {:}",
+            &res.url
+        ))?;
+
+        println!("{:#?}", s);
 
         let df = s
-            .data
-            .ok_or(anyhow!("missing data"))?
+            // .data
+            // .ok_or(anyhow!("missing data"))?
             .dataflows
             .ok_or(anyhow!("missing dataflows"))?;
 
@@ -126,7 +138,7 @@ impl Default for Crawler {
             ),
             warc_write: true,
             // base_url: None,
-            stages: vec![],
+            stages: vec![Box::new(DataflowStage {})],
         }
     }
 }
@@ -150,7 +162,7 @@ impl Crawler {
         for stage in &self.stages {
             println!("Starting stage {}", stage.name());
 
-            let urls = stage.get_url(prior_data.clone())?;
+            let urls = stage.get_uri(prior_data.clone())?;
 
             prior_data.clear();
             for relative_url in urls {

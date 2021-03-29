@@ -14,7 +14,7 @@ use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
 /// SDMX-JSON Schema for structure messages
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Structure {
     /// Data contains the message's “primary data”.
     pub data: Option<Data>,
@@ -27,7 +27,7 @@ pub struct Structure {
 }
 
 /// Data contains the message's “primary data”.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Data {
     /// agencySchemes contains a collection of agency scheme descriptions.
     #[serde(rename = "agencySchemes")]
@@ -127,7 +127,7 @@ pub struct Data {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct AgencySchemeTypeElement {
     pub id: String,
     #[serde(rename = "agencyID")]
@@ -167,7 +167,7 @@ pub struct AgencySchemeTypeElement {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct AgencyType {
     pub name: String,
     pub id: Option<String>,
@@ -188,7 +188,7 @@ pub struct AgencyType {
 /// AnnotationType provides for non-documentation notes and annotations to be embedded in
 /// data and structure messages. It provides optional fields for providing a title, a type
 /// description, a URI, and the text of the annotation.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct AnnotationType {
     /// Non-standard identification of an annotation.
     pub id: Option<String>,
@@ -220,7 +220,7 @@ pub struct AnnotationType {
 ///
 /// Links field is an array of link objects. If appropriate, a collection of links to
 /// additional external resources for the header.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Link {
     pub href: Option<String>,
     /// The natural language of the external link, the same as used in the HTTP Accept-Language
@@ -242,7 +242,7 @@ pub struct Link {
 }
 
 /// ContactType describes the structure of a contact's details.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct ContactType {
     /// Department is a humain-readable designation of the organisational structure by a
     /// linguistic expression, within which the contact person works.
@@ -284,7 +284,7 @@ pub struct ContactType {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct AttachmentConstraintTypeElement {
     pub id: String,
     #[serde(rename = "agencyID")]
@@ -316,7 +316,7 @@ pub struct AttachmentConstraintTypeElement {
 
 /// AttachmentConstraintAttachmentType defines the structure for specifying the object to
 /// which an attachment constraints applies.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct AttachmentConstraintAttachmentType {
     pub dataflows: Option<Vec<String>>,
     #[serde(rename = "dataSets")]
@@ -348,7 +348,7 @@ pub struct AttachmentConstraintAttachmentType {
 /// dataSet is a urn reference to a data set to which the constraint is attached.
 ///
 /// metadataSet is a urn reference to a metadata set to which the constraint is attached.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct SetReferenceType {
     /// DataProvider is a urn reference to a the provider of the data/metadata set.
     #[serde(rename = "dataProvider")]
@@ -360,7 +360,7 @@ pub struct SetReferenceType {
 /// DataKeySetType defines a collection of full or partial data keys (dimension values).
 ///
 /// DataKeySet defines a collection of full or partial data keys.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct DataKeySetType {
     #[serde(rename = "isIncluded")]
     pub is_included: bool,
@@ -375,7 +375,7 @@ pub struct DataKeySetType {
 /// observed value and data attribute) which have the dimension values provided in this
 /// definition. Any dimension not stated explicitly in this key is assumed to be wild carded,
 /// thus allowing for the definition of partial data keys.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct DataKeyType {
     #[serde(rename = "keyValues")]
     pub key_values: Vec<DataKeyValueType>,
@@ -383,7 +383,7 @@ pub struct DataKeyType {
 
 /// DataKeyValueType is a type for providing a dimension value for the purpose of defining a
 /// distinct data key. Only a single value can be provided for the dimension.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct DataKeyValueType {
     pub id: String,
     pub value: String,
@@ -392,7 +392,7 @@ pub struct DataKeyValueType {
 /// MetadataKeySetType defines a collection of metadata keys (identifier component values).
 ///
 /// MetadataKeySet defines a collection of metadata keys.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct MetadataKeySetType {
     #[serde(rename = "isIncluded")]
     pub is_included: bool,
@@ -412,7 +412,7 @@ pub struct MetadataKeySetType {
 /// possible keys for a key descriptor values target object, or all dates for report period
 /// target object. The purpose of this key reference a metadata conforming to a particular
 /// report structure for given object or set of objects.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct MetadataKeyType {
     #[serde(rename = "keyValues")]
     pub key_values: Vec<MetadataKeyValueType>,
@@ -424,7 +424,7 @@ pub struct MetadataKeyType {
 /// MetadataKeyValueType is a type for providing a target object value for the purpose of
 /// defining a distinct metadata key. Only a single value can be provided for the target
 /// object.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct MetadataKeyValueType {
     #[serde(rename = "dataKey")]
     pub data_key: Option<DataKeyType>,
@@ -455,7 +455,7 @@ pub struct MetadataKeyValueType {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct CategorisationTypeElement {
     pub id: String,
     #[serde(rename = "agencyID")]
@@ -501,7 +501,7 @@ pub struct CategorisationTypeElement {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct CategorySchemeType {
     pub id: String,
     #[serde(rename = "agencyID")]
@@ -541,7 +541,7 @@ pub struct CategorySchemeType {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct CategoryTypeElement {
     pub name: String,
     pub id: Option<String>,
@@ -569,7 +569,7 @@ pub struct CategoryTypeElement {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct CodelistType {
     pub id: String,
     #[serde(rename = "agencyID")]
@@ -611,7 +611,7 @@ pub struct CodelistType {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct CodeTypeElement {
     pub name: String,
     pub id: Option<String>,
@@ -645,7 +645,7 @@ pub struct CodeTypeElement {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct ConceptSchemeType {
     pub id: String,
     #[serde(rename = "agencyID")]
@@ -686,7 +686,7 @@ pub struct ConceptSchemeType {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct ConceptType {
     pub name: String,
     pub id: Option<String>,
@@ -712,7 +712,7 @@ pub struct ConceptType {
 /// ConceptRepresentation defines the core representation that are allowed for a concept. The
 /// text format allowed for a concept is that which is allowed for any non-target object
 /// component.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct ConceptRepresentation {
     /// Urn reference to a codelist which enumerates the possible values that can be used as the
     /// representation of this concept.
@@ -727,7 +727,7 @@ pub struct ConceptRepresentation {
 /// only allows factets and text types applicable to codes. Although the time facets permit
 /// any value, an actual code identifier does not support the necessary characters for time.
 /// Therefore these facets should not contain time in their values.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct CodededTextFormatType {
     #[serde(rename = "endTime")]
     pub end_time: Option<String>,
@@ -757,7 +757,7 @@ pub struct CodededTextFormatType {
 
 /// BasicComponentTextFormatType is a restricted version of the TextFormatType that restricts
 /// the text type to the representations allowed for all components except for target objects.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct BasicComponentTextFormatType {
     pub decimals: Option<i64>,
     #[serde(rename = "endTime")]
@@ -806,7 +806,7 @@ pub struct BasicComponentTextFormatType {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct ContentConstraintTypeElement {
     pub id: String,
     #[serde(rename = "agencyID")]
@@ -855,7 +855,7 @@ pub struct ContentConstraintTypeElement {
 ///
 /// ContentConstraintAttachmentType defines the structure for specifying the target object(s)
 /// of a content constraint.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct ContentConstraintAttachmentType {
     pub dataflows: Option<Vec<String>>,
     /// dataProvider is a urn reference to a the provider of the data/metadata set to which the
@@ -888,7 +888,7 @@ pub struct ContentConstraintAttachmentType {
 ///
 /// QueryableDataSourceType describes a data source which accepts an standard SDMX Query
 /// message and responds appropriately.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct QueryableDataSourceType {
     /// DataURL contains the URL of the data source.
     #[serde(rename = "dataURL")]
@@ -914,7 +914,7 @@ pub struct QueryableDataSourceType {
 /// RegionType and simply refines the key and attribute values to conform with what is
 /// applicable for dimensions and attributes, respectively. See the documentation of the base
 /// type for more details on how a region is defined.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct CubeRegionType {
     pub attributes: Option<Vec<AttributeValueSetType>>,
     #[serde(rename = "isIncluded")]
@@ -930,7 +930,7 @@ pub struct CubeRegionType {
 /// be provided. For example, a value of CONTACT.ADDRESS.STREET refers to the metadata
 /// attribute with the identifier STREET which exists in the ADDRESS metadata attribute in
 /// the CONTACT metadata attribute, which is defined at the root of the report structure.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct AttributeValueSetType {
     #[serde(rename = "cascadeValues")]
     pub cascade_values: Option<Vec<String>>,
@@ -943,7 +943,7 @@ pub struct AttributeValueSetType {
 /// TimeRangeValueType allows a time period value to be expressed as a range. It can be
 /// expressed as the period before a period, after a period, or between two periods. Each of
 /// these properties can specify their inclusion in regards to the range.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct TimeRangeValueType {
     /// AfterPeriod is the period after which the period is meant to cover. This date may be
     /// inclusive or exclusive in the range.
@@ -977,7 +977,7 @@ pub struct TimeRangeValueType {
 ///
 /// StartPeriod is the start date or the range that the queried date must occur within. This
 /// date may be inclusive or exclusive in the range.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct TimePeriodRangeType {
     #[serde(rename = "isInclusive")]
     pub is_inclusive: Option<bool>,
@@ -987,7 +987,7 @@ pub struct TimePeriodRangeType {
 /// CubeRegionKeyType is a type for providing a set of values for a dimension for the purpose
 /// of defining a data cube region. A set of distinct value can be provided, or if this
 /// dimension is represented as time, and time range can be specified.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct CubeRegionKeyType {
     #[serde(rename = "cascadeValues")]
     pub cascade_values: Option<Vec<String>>,
@@ -1007,7 +1007,7 @@ pub struct CubeRegionKeyType {
 /// simply refines the key and attribute values to conform with what is applicable for target
 /// objects and metadata attributes, respectively. See the documentation of the base type for
 /// more details on how a region is defined.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct MetadataTargetRegionType {
     pub attributes: Option<Vec<MetadataAttributeValueSetType>>,
     pub include: Option<bool>,
@@ -1021,7 +1021,7 @@ pub struct MetadataTargetRegionType {
 /// MetadataAttributeValueSetType defines the structure for providing values for a metadata
 /// attribute. If no values are provided, the attribute is implied to include/excluded from
 /// the region in which it is defined, with no regard to the value of the metadata attribute.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct MetadataAttributeValueSetType {
     #[serde(rename = "cascadeValues")]
     pub cascade_values: Option<Vec<String>>,
@@ -1037,7 +1037,7 @@ pub struct MetadataAttributeValueSetType {
 /// references can be provided for data set reference and identifiable object reference
 /// target objects. For a key descriptor values target object, a collection of data keys can
 /// be provided.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct MetadataTargetRegionKeyType {
     #[serde(rename = "dataKeys")]
     pub data_keys: Option<Vec<DataKeyType>>,
@@ -1053,7 +1053,7 @@ pub struct MetadataTargetRegionKeyType {
 /// ReferencePeriod is used to report start date and end date constraints.
 ///
 /// Specifies the inclusive start and end times.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct ReferencePeriodType {
     #[serde(rename = "endTime")]
     pub end_time: String,
@@ -1065,7 +1065,7 @@ pub struct ReferencePeriodType {
 ///
 /// ReleaseCalendarType describes information about the timing of releases of the constrained
 /// data. All of these values use the standard "P7D" - style format.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct ReleaseCalendarType {
     /// Offset is the interval between January first and the first release of data within the
     /// year.
@@ -1094,7 +1094,7 @@ pub struct ReleaseCalendarType {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct DataConsumerSchemeTypeElement {
     pub id: String,
     #[serde(rename = "agencyID")]
@@ -1134,7 +1134,7 @@ pub struct DataConsumerSchemeTypeElement {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct DataConsumerTypeElement {
     pub name: String,
     pub id: Option<String>,
@@ -1166,7 +1166,7 @@ pub struct DataConsumerTypeElement {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct DataProviderSchemeTypeElement {
     pub id: String,
     #[serde(rename = "agencyID")]
@@ -1206,7 +1206,7 @@ pub struct DataProviderSchemeTypeElement {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct DataProviderTypeElement {
     pub name: String,
     pub id: Option<String>,
@@ -1236,7 +1236,7 @@ pub struct DataProviderTypeElement {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct DataStructureTypeElement {
     pub id: String,
     #[serde(rename = "agencyID")]
@@ -1285,7 +1285,7 @@ pub struct DataStructureTypeElement {
 /// DataStructureComponentsType describes the structure of the grouping to the sets of
 /// metadata concepts that have a defined structural role in the data structure definition.
 /// At a minimum at least one dimension and a primary measure must be defined.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct DataStructureComponentsType {
     #[serde(rename = "attributeList")]
     pub attribute_list: Option<AttributeListTypeClass>,
@@ -1306,7 +1306,7 @@ pub struct DataStructureComponentsType {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct AttributeListTypeClass {
     pub id: Option<String>,
     pub annotations: Option<Vec<AnnotationType>>,
@@ -1337,7 +1337,7 @@ pub struct AttributeListTypeClass {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct AttributeType {
     #[serde(rename = "assignmentStatus")]
     pub assignment_status: UsageStatusType,
@@ -1367,7 +1367,7 @@ pub struct AttributeType {
 ///
 /// AttributeRelationshipType defines the structure for stating the relationship between an
 /// attribute and other data structure definition components.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct AttributeRelationshipType {
     #[serde(rename = "attachmentGroups")]
     pub attachment_groups: Option<Vec<String>>,
@@ -1390,7 +1390,7 @@ pub struct AttributeRelationshipType {
 
 /// SimpleDataStructureRepresentationType defines the representation for any non-measure and
 /// non-time dimension data structure definition component.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct SimpleDataStructureRepresentationType {
     /// Urn reference to a codelist
     pub enumeration: Option<String>,
@@ -1402,7 +1402,7 @@ pub struct SimpleDataStructureRepresentationType {
 
 /// SimpleComponentTextFormatType is a restricted version of the BasicComponentTextFormatType
 /// that does not allow for multi-lingual values.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct SimpleComponentTextFormatType {
     pub decimals: Option<i64>,
     #[serde(rename = "endTime")]
@@ -1457,7 +1457,7 @@ pub struct SimpleComponentTextFormatType {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct ReportingYearStartDayType {
     #[serde(rename = "assignmentStatus")]
     pub assignment_status: UsageStatusType,
@@ -1479,7 +1479,7 @@ pub struct ReportingYearStartDayType {
 /// ReportingYearStartDayRepresentationType defines the representation for the reporting year
 /// start day attribute. Enumerated values are not allowed and the text format is fixed to be
 /// a day and month in the ISO 8601 format of '--MM-DD'.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct ReportingYearStartDayRepresentationType {
     #[serde(rename = "textFormat")]
     pub text_format: ReportingYearStartDayTextFormatType,
@@ -1489,7 +1489,7 @@ pub struct ReportingYearStartDayRepresentationType {
 /// NonFacetedTextFormatType that fixes the value of the text type to be DayMonth. This type
 /// exists solely for the purpose of fixing the representation of the reporting year start
 /// day attribute.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct ReportingYearStartDayTextFormatType {
     #[serde(rename = "textType")]
     pub text_type: Option<SimpleDataType>,
@@ -1513,7 +1513,7 @@ pub struct ReportingYearStartDayTextFormatType {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct DimensionListTypeClass {
     pub id: Option<String>,
     pub annotations: Option<Vec<AnnotationType>>,
@@ -1546,7 +1546,7 @@ pub struct DimensionListTypeClass {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct DimensionType {
     /// Urn reference to a concept where the identification of the concept scheme which defines
     /// it is contained in another context.
@@ -1597,7 +1597,7 @@ pub struct DimensionType {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct MeasureDimensionType {
     /// Urn reference to a concept where the identification of the concept scheme which defines
     /// it is contained in another context.
@@ -1632,7 +1632,7 @@ pub struct MeasureDimensionType {
 
 /// BaseDimensionRepresentationType is an abstract base which defines the representation for
 /// a measure dimension.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct MeasureDimensionRepresentationType {
     /// Urn reference to a concept scheme object.
     pub enumeration: String,
@@ -1664,7 +1664,7 @@ pub struct MeasureDimensionRepresentationType {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct TimeDimensionType {
     /// Urn reference to a concept where the identification of the concept scheme which defines
     /// it is contained in another context.
@@ -1693,7 +1693,7 @@ pub struct TimeDimensionType {
 
 /// TimeDimensionRepresentationType defines the representation for the time dimension.
 /// Enumerated values are not allowed.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct TimeDimensionRepresentationType {
     #[serde(rename = "textFormat")]
     pub text_format: TimeTextFormatType,
@@ -1702,7 +1702,7 @@ pub struct TimeDimensionRepresentationType {
 /// TimeTextFormat is a restricted version of the SimpleComponentTextFormatType that only
 /// allows time based format and specifies a default ObservationalTimePeriod representation
 /// and facets of a start and end time.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct TimeTextFormatType {
     #[serde(rename = "endTime")]
     pub end_time: Option<String>,
@@ -1727,7 +1727,7 @@ pub struct TimeTextFormatType {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct GroupTypeElement {
     pub id: String,
     pub annotations: Option<Vec<AnnotationType>>,
@@ -1753,7 +1753,7 @@ pub struct GroupTypeElement {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct MeasureListTypeClass {
     #[serde(rename = "primaryMeasure")]
     pub primary_measure: PrimaryMeasureType,
@@ -1784,7 +1784,7 @@ pub struct MeasureListTypeClass {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct PrimaryMeasureType {
     /// Urn reference to a concept where the identification of the concept scheme which defines
     /// it is contained in another context.
@@ -1814,7 +1814,7 @@ pub struct PrimaryMeasureType {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct DataflowTypeElement {
     pub id: String,
     #[serde(rename = "agencyID")]
@@ -1859,7 +1859,7 @@ pub struct DataflowTypeElement {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct HierarchicalCodelistTypeElement {
     pub id: String,
     #[serde(rename = "agencyID")]
@@ -1903,7 +1903,7 @@ pub struct HierarchicalCodelistTypeElement {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct HierarchyTypeElement {
     pub name: String,
     pub id: Option<String>,
@@ -1942,7 +1942,7 @@ pub struct HierarchyTypeElement {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct HierarchicalCodeTypeElement {
     pub id: String,
     pub annotations: Option<Vec<AnnotationType>>,
@@ -1994,7 +1994,7 @@ pub struct HierarchicalCodeTypeElement {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct LevelTypeClass {
     pub name: String,
     pub id: Option<String>,
@@ -2015,7 +2015,7 @@ pub struct LevelTypeClass {
 
 /// CodingFormat specifies the text formatting of the codes in this level. This includes
 /// facets such as the expected characters and the length of the codes.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct CodingTextFormatType {
     #[serde(rename = "endValue")]
     pub end_value: Option<i64>,
@@ -2059,7 +2059,7 @@ pub struct CodingTextFormatType {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct MetadataStructureTypeElement {
     pub id: String,
     #[serde(rename = "agencyID")]
@@ -2093,7 +2093,7 @@ pub struct MetadataStructureTypeElement {
 /// MetadataStructureComponentsType describes the structure of the grouping of the sets of
 /// the components that make up the metadata structure definition. At a minimum, a full
 /// target identifier and at least one report structure must be defined.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct MetadataStructureComponentsType {
     #[serde(rename = "metadataTargets")]
     pub metadata_targets: Vec<MetadataTargetTypeElement>,
@@ -2109,7 +2109,7 @@ pub struct MetadataStructureComponentsType {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct MetadataTargetTypeElement {
     pub id: String,
     pub annotations: Option<Vec<AnnotationType>>,
@@ -2140,7 +2140,7 @@ pub struct MetadataTargetTypeElement {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct ConstraintContentTargetType {
     #[serde(rename = "localRepresentation")]
     pub local_representation: ConstraintRepresentationType,
@@ -2154,7 +2154,7 @@ pub struct ConstraintContentTargetType {
 /// ConstraintRepresentationType defines the possible local representations of a constraint
 /// reference target object. The representation is fixed to always be an attachment
 /// constraint reference.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct ConstraintRepresentationType {
     #[serde(rename = "textFormat")]
     pub text_format: ConstraintTextFormatType,
@@ -2162,7 +2162,7 @@ pub struct ConstraintRepresentationType {
 
 /// ConstraintTextFormatType is a restricted version of the NonFacetedTextFormatType that
 /// specifies a fixed AttachmentConstraintReference representation.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct ConstraintTextFormatType {
     #[serde(rename = "textType")]
     pub text_type: Option<TargetObjectDataType>,
@@ -2179,7 +2179,7 @@ pub struct ConstraintTextFormatType {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct DataSetTargetType {
     #[serde(rename = "localRepresentation")]
     pub local_representation: DataSetRepresentationType,
@@ -2192,7 +2192,7 @@ pub struct DataSetTargetType {
 
 /// DataSetRepresentationType defines the possible local representations of a data set
 /// reference target object. The representation is fixed to always be a data set reference.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct DataSetRepresentationType {
     #[serde(rename = "textFormat")]
     pub text_format: DataSetTextFormatType,
@@ -2200,7 +2200,7 @@ pub struct DataSetRepresentationType {
 
 /// DataSetTextFormatType is a restricted version of the NonFacetedTextFormatType that
 /// specifies a fixed DataSetReference representation.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct DataSetTextFormatType {
     #[serde(rename = "textType")]
     pub text_type: Option<TargetObjectDataType>,
@@ -2221,7 +2221,7 @@ pub struct DataSetTextFormatType {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Identifiable {
     pub id: String,
     #[serde(rename = "localRepresentation")]
@@ -2236,7 +2236,7 @@ pub struct Identifiable {
 
 /// IdentifiableObjectRepresentationType defines the possible local representations of an
 /// identifiable object target object.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct IdentifiableObjectRepresentationType {
     /// Urn reference to an item scheme. Enumeration is only permissible if the object type of
     /// the identifiable object target is an item in an item scheme. This enumeration is meant to
@@ -2248,7 +2248,7 @@ pub struct IdentifiableObjectRepresentationType {
 
 /// IdentifiableObjectTextFormatType is a restricted version of the NonFacetedTextFormatType
 /// that specifies a fixed IdentifiableReference representation.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct IdentifiableObjectTextFormatType {
     #[serde(rename = "textType")]
     pub text_type: Option<TargetObjectDataType>,
@@ -2270,7 +2270,7 @@ pub struct IdentifiableObjectTextFormatType {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct KeyDescriptorValuesTargetType {
     #[serde(rename = "localRepresentation")]
     pub local_representation: KeyDescriptorValuesRepresentationType,
@@ -2284,7 +2284,7 @@ pub struct KeyDescriptorValuesTargetType {
 /// KeyDescriptorValuesRepresentationType defines the possible local representations of a key
 /// descriptor values target object. The representation is fixed to always be a data key
 /// (KeyValues).
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct KeyDescriptorValuesRepresentationType {
     #[serde(rename = "textFormat")]
     pub text_format: KeyDescriptorValuesTextFormatType,
@@ -2292,7 +2292,7 @@ pub struct KeyDescriptorValuesRepresentationType {
 
 /// KeyDescriptorValuesTextFormatType is a restricted version of the NonFacetedTextFormatType
 /// that specifies a fixed KeyValues representation.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct KeyDescriptorValuesTextFormatType {
     #[serde(rename = "textType")]
     pub text_type: Option<TargetObjectDataType>,
@@ -2308,7 +2308,7 @@ pub struct KeyDescriptorValuesTextFormatType {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct ReportPeriodTargetType {
     #[serde(rename = "localRepresentation")]
     pub local_representation: ReportPeriodRepresentationType,
@@ -2322,7 +2322,7 @@ pub struct ReportPeriodTargetType {
 /// ReportPeriodRepresentationType defines the possible local representations of a report
 /// period target object. The reprentation must be a time period or a subset of this
 /// representation.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct ReportPeriodRepresentationType {
     #[serde(rename = "textFormat")]
     pub text_format: TimeTextFormatType,
@@ -2345,7 +2345,7 @@ pub struct ReportPeriodRepresentationType {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct ReportStructureTypeElement {
     pub id: String,
     #[serde(rename = "metadataAttributes")]
@@ -2383,7 +2383,7 @@ pub struct ReportStructureTypeElement {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct MetadataAttributeType {
     /// Urn reference to a concept where the identification of the concept scheme which defines
     /// it is contained in another context.
@@ -2408,7 +2408,7 @@ pub struct MetadataAttributeType {
 
 /// MetadataAttributeRepresentationType defines the possible local representations of a
 /// metadata attribute.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct MetadataAttributeRepresentationType {
     /// Urn reference to a codelist object.
     pub enumeration: Option<String>,
@@ -2434,7 +2434,7 @@ pub struct MetadataAttributeRepresentationType {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct MetadataflowTypeElement {
     pub id: String,
     #[serde(rename = "agencyID")]
@@ -2477,7 +2477,7 @@ pub struct MetadataflowTypeElement {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct OrganisationUnitSchemeTypeElement {
     pub id: String,
     #[serde(rename = "agencyID")]
@@ -2519,7 +2519,7 @@ pub struct OrganisationUnitSchemeTypeElement {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct OrganisationUnitTypeElement {
     pub name: String,
     pub id: Option<String>,
@@ -2558,7 +2558,7 @@ pub struct OrganisationUnitTypeElement {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct ProcessTypeElement {
     pub id: String,
     #[serde(rename = "agencyID")]
@@ -2597,7 +2597,7 @@ pub struct ProcessTypeElement {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct ProcessStepTypeElement {
     pub name: String,
     pub id: Option<String>,
@@ -2624,7 +2624,7 @@ pub struct ProcessStepTypeElement {
 /// in multiple, parallel-language versions.
 ///
 /// ComputationType describes a computation in a process.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct ComputationType {
     pub annotations: Option<Vec<AnnotationType>>,
     pub description: String,
@@ -2645,7 +2645,7 @@ pub struct ComputationType {
 /// provides a reference to the object that is the input or output.
 ///
 /// Output references an object which is an output form the process step.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct InputOutputType {
     pub annotations: Option<Vec<AnnotationType>>,
     #[serde(rename = "localID")]
@@ -2668,7 +2668,7 @@ pub struct InputOutputType {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct TransitionTypeElement {
     /// Condition is a textual description of the conditions to be met in order for the target
     /// step to be proceeded to. It is informational only (not machine-actionable), provided in
@@ -2707,7 +2707,7 @@ pub struct TransitionTypeElement {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct ProvisionAgreementTypeElement {
     pub id: String,
     #[serde(rename = "agencyID")]
@@ -2755,7 +2755,7 @@ pub struct ProvisionAgreementTypeElement {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct ReportingTaxonomyTypeElement {
     pub id: String,
     #[serde(rename = "agencyID")]
@@ -2796,7 +2796,7 @@ pub struct ReportingTaxonomyTypeElement {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct ReportingCategoryTypeElement {
     pub name: String,
     pub id: Option<String>,
@@ -2831,7 +2831,7 @@ pub struct ReportingCategoryTypeElement {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct StructureSetTypeElement {
     pub id: String,
     #[serde(rename = "agencyID")]
@@ -2883,7 +2883,7 @@ pub struct StructureSetTypeElement {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct CategorySchemeMapTypeElement {
     pub name: String,
     pub id: Option<String>,
@@ -2907,7 +2907,7 @@ pub struct CategorySchemeMapTypeElement {
 ///
 /// CategoryMapType defines the structure for mapping two categories. A local reference is
 /// provided both the source and target category.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct CategoryMapType {
     pub annotations: Option<Vec<AnnotationType>>,
     /// Urn reference to a category where the identification of the category scheme which defines
@@ -2930,7 +2930,7 @@ pub struct CategoryMapType {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct CodelistMapTypeElement {
     pub name: String,
     pub id: Option<String>,
@@ -2954,7 +2954,7 @@ pub struct CodelistMapTypeElement {
 ///
 /// CodeMapType defines the structure for mapping two codes. A local reference is provided
 /// both the source and target code.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct CodeMapType {
     pub annotations: Option<Vec<AnnotationType>>,
     /// Urn reference to a code where the identification of the codelist which defines it is
@@ -2977,7 +2977,7 @@ pub struct CodeMapType {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct ConceptSchemeMapTypeElement {
     pub name: String,
     pub id: Option<String>,
@@ -3001,7 +3001,7 @@ pub struct ConceptSchemeMapTypeElement {
 ///
 /// ConceptMapType defines the structure for mapping two concepts. A local reference is
 /// provided both the source and target concept.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct ConceptMapType {
     pub annotations: Option<Vec<AnnotationType>>,
     /// Urn reference to a local concept.
@@ -3022,7 +3022,7 @@ pub struct ConceptMapType {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct HybridCodelistMapTypeElement {
     pub name: String,
     pub id: Option<String>,
@@ -3048,7 +3048,7 @@ pub struct HybridCodelistMapTypeElement {
 ///
 /// CodeMapType defines the structure for associating a code from a source codelist to a code
 /// in a target codelist. Note that either of these may come from a hierarchical codelist.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct HybridCodeMapType {
     pub annotations: Option<Vec<AnnotationType>>,
     /// Source provides a local reference to the code which is to be mapped. If this code is from
@@ -3074,7 +3074,7 @@ pub struct HybridCodeMapType {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct OrganisationSchemeMapTypeElement {
     pub name: String,
     pub id: Option<String>,
@@ -3097,7 +3097,7 @@ pub struct OrganisationSchemeMapTypeElement {
 ///
 /// OrganisationMapType defines the structure for mapping two organisations. A local
 /// reference is provided both the source and target organisation.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct OrganisationMapType {
     pub annotations: Option<Vec<AnnotationType>>,
     /// Urn reference to an organisation, regardless of type, where the identification of the
@@ -3120,7 +3120,7 @@ pub struct OrganisationMapType {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct ReportingTaxonomyMapTypeElement {
     pub name: String,
     pub id: Option<String>,
@@ -3144,7 +3144,7 @@ pub struct ReportingTaxonomyMapTypeElement {
 ///
 /// ReportingCategoryMapType defines the structure for mapping two reporting categories. A
 /// local reference is provided both the source and target category.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct ReportingCategoryMapType {
     pub annotations: Option<Vec<AnnotationType>>,
     /// Urn reference to a reporting category.
@@ -3171,7 +3171,7 @@ pub struct ReportingCategoryMapType {
 ///
 /// AnnotableType is an abstract base type used for all annotable artefacts. Any type that
 /// provides for annotations should extend this type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct StructureMapTypeElement {
     pub name: String,
     pub id: Option<String>,
@@ -3201,7 +3201,7 @@ pub struct StructureMapTypeElement {
 ///
 /// ComponentMapType defines the structure for relating a component in a source structure to
 /// a component in a target structure.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct ComponentMapType {
     pub annotations: Option<Vec<AnnotationType>>,
     /// RepresentationMapping describes the mapping rules to map the value of the source
@@ -3228,7 +3228,7 @@ pub struct ComponentMapType {
 /// containing structure set or a description of the source and target text formats must be
 /// provided. Note that for data structure components, only a reference to a codelist map is
 /// relevant, since that is the only type of coded representation allowed in a data structure.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct RepresentationMapType {
     /// CodelistMap references (through a urn) a codelist map defined in the same structure set
     /// which maps the enumeration of the representation of the source component to the
@@ -3256,7 +3256,7 @@ pub struct RepresentationMapType {
 ///
 /// TextFormatType defines the information for describing a full range of text formats and
 /// may place restrictions on the values of the other attributes, referred to as "facets".
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct TextFormatType {
     pub decimals: Option<i64>,
     #[serde(rename = "endTime")]
@@ -3294,7 +3294,7 @@ pub struct TextFormatType {
 ///
 /// ValueMapType contains a collection of value mappings, which give a source and target
 /// value.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct ValueMapType {
     #[serde(rename = "valueMappings")]
     pub value_mappings: Vec<ValueMappingType>,
@@ -3303,14 +3303,14 @@ pub struct ValueMapType {
 /// ValueMapping provides a source and target value for the purpose of mapping.
 ///
 /// ValueMappingType specifies the relationship between two values as a source and target.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct ValueMappingType {
     pub source: String,
     pub target: String,
 }
 
 /// Error describes the structure of an error or warning message.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Error {
     /// Provides a code number for the error message. Code numbers are defined in the SDMX 2.1
     /// Web Services Guidelines.
@@ -3340,7 +3340,7 @@ pub struct Error {
 
 /// A meta object that contains non-standard meta-information and basic technical information
 /// about the message, such as when it was prepared and who has sent it.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Meta {
     /// Array of strings containing the identifyer of all languages used anywhere in the message
     /// for localized elements, and thus the languages of the intended audience, representaing in
@@ -3378,7 +3378,7 @@ pub struct Meta {
 /// Sender contains information about the party that is transmitting the message.
 ///
 /// Sender is information about the party that is transmitting the message.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Party {
     /// Contact provides contact information for the party in regard to the transmission of the
     /// message.
@@ -3394,7 +3394,7 @@ pub struct Party {
 /// OccurenceType is used to express the maximum occurrence of an object. It combines an
 /// integer, greater than 1, and the literal text, "unbounded", for objects which have no
 /// upper limit on its occurrence.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 #[serde(untagged)]
 pub enum OccurenceType {
     Enum(OccurenceTypeEnum),
@@ -3405,7 +3405,7 @@ pub enum OccurenceType {
 /// Although some of the higher level time period formats are perimitted, it should be noted
 /// that any value which contains time (which includes a time zone offset) is not allowable
 /// as a code identifier.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub enum CodeDataType {
     Alpha,
     AlphaNumeric,
@@ -3445,7 +3445,7 @@ pub enum CodeDataType {
 
 /// BasicComponentDataType provides an enumerated list of the types of characters allowed in
 /// the textType attribute for all non-target object components.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub enum BasicComponentDataType {
     Alpha,
     AlphaNumeric,
@@ -3496,7 +3496,7 @@ pub enum BasicComponentDataType {
 /// attachment. If 'Allowed' then the constraint contains the allowed values for attachable
 /// object. If 'Actual' then the constraints contains the actual data present for the
 /// attachable object.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub enum ContentConstraintTypeCodeType {
     Actual,
     Allowed,
@@ -3504,7 +3504,7 @@ pub enum ContentConstraintTypeCodeType {
 
 /// UsageStatusType provides a list of enumerated types for indicating whether reporting a
 /// given attribute is mandatory or conditional.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub enum UsageStatusType {
     Conditional,
     Mandatory,
@@ -3513,7 +3513,7 @@ pub enum UsageStatusType {
 /// SimpleDataType restricts BasicComponentDataType to specify the allowable data types for a
 /// data structure definition component. The XHTML representation is removed as a possible
 /// type.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub enum SimpleDataType {
     Alpha,
     AlphaNumeric,
@@ -3570,7 +3570,7 @@ pub enum SimpleDataType {
 /// this attribute allows for each dimension to be processed independent of its element as
 /// well as maintaining the restriction of only one measure and time dimension while still
 /// allowing dimension to occur in any order.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub enum DimensionTypeType {
     Dimension,
     MeasureDimension,
@@ -3579,7 +3579,7 @@ pub enum DimensionTypeType {
 
 /// TimeDataType restricts SimpleDataType to specify the allowable data types for
 /// representing a time value.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub enum TimeDataType {
     BasicTimePeriod,
     DateTime,
@@ -3602,7 +3602,7 @@ pub enum TimeDataType {
 
 /// SimpleCodeDataType restricts SimpleDataType to specify the allowable data types for a
 /// simple code. The possible values are simply Alpha, AlphaNumeric, or Numeric.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub enum SimpleCodeDataType {
     Alpha,
     AlphaNumeric,
@@ -3611,7 +3611,7 @@ pub enum SimpleCodeDataType {
 
 /// TargetObjectDataType restricts DataType to specify the allowable data types for
 /// representing a target object value.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub enum TargetObjectDataType {
     AttachmentConstraintReference,
     DataSetReference,
@@ -3622,7 +3622,7 @@ pub enum TargetObjectDataType {
 /// ObjectTypeCodelistType provides an enumeration of all objects outside of the base
 /// infomration model class. This includes some abstract object types such as Organsiation
 /// and Constraint.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub enum ObjectTypeCodelistType {
     Agency,
     AgencyScheme,
@@ -3695,7 +3695,7 @@ pub enum ObjectTypeCodelistType {
 }
 
 /// UnboundedCodeType provides single textual value of "unbounded", for use in OccurentType.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub enum OccurenceTypeEnum {
     #[serde(rename = "unbounded")]
     Unbounded,
@@ -3703,7 +3703,7 @@ pub enum OccurenceTypeEnum {
 
 /// DataTypeType provides an enumerated list of the types of data formats allowed as the for
 /// the representation of an object.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub enum DataType {
     Alpha,
     AlphaNumeric,
@@ -3758,7 +3758,7 @@ pub enum DataType {
 ///
 /// ToValueTypeType provides an enumeration of available text-equivalents for translation of
 /// coded values into textual formats.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub enum ToValueTypeType {
     Description,
     Name,
