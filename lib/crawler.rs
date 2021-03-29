@@ -2,7 +2,8 @@ use http::{HeaderMap, HeaderValue};
 use reqwest::Client;
 
 use crate::{
-    queries::metadata_query, reqwest_layer::Response, reqwest_warc::write_warc,
+    minimal_structure::Dataflow, queries::metadata_query,
+    reqwest_layer::Response, reqwest_warc::write_warc, structure::Structure,
 };
 use anyhow::{anyhow, Context, Result};
 use std::{any::Any, time::Instant};
@@ -42,22 +43,57 @@ trait Stage {
     fn name(&self) -> String;
     /// Get the URL relative to the base URL to request
     /// `prior` is any prior stage data relevant to this one, serialized as JSON
-    fn get_url(&self, prior: String) -> Result<url::Url>;
+    fn get_url(&self, prior: Vec<String>) -> Result<Vec<url::Url>>;
 
-    fn extract_relevant(&self, res: Response) -> Result<String>;
+    fn extract_relevant(&self, res: Response) -> Result<Vec<String>>;
+}
+
+fn validate_get_body(res: Response) -> Result<String> {
+    let ct = res
+        .headers
+        .get(http::header::CONTENT_TYPE)
+        .ok_or_else(|| anyhow!("No Content Type from response"))?
+        .to_str()?
+        .to_string();
+    if !(ct.contains("application/json")
+        || ct.contains("application/vnd.sdmx.structure+json"))
+    {
+        return Err(anyhow!("Invalid content type {}", ct));
+    }
+    let bd = res.body.ok_or_else(|| anyhow!("No body from response"))?;
+    Ok(bd)
 }
 
 struct DataflowStage {}
 
 impl Stage for DataflowStage {
-    fn get_url(&self, prior: String) -> Result<Url> {
+    fn get_url(&self, prior: Vec<String>) -> Result<Vec<url::Url>> {
         let paths = ["dataflow", "all", "all", "latest"].to_vec();
-        Url::try_from(metadata_query(paths).as_str())
-            .context("Failed to parse URL")
+        Ok(vec![Url::try_from(metadata_query(paths).as_str())
+            .context("Failed to parse URL")?])
     }
 
-    fn extract_relevant(&self, res: Response) -> Result<String> {
-        todo!()
+    fn extract_relevant(&self, res: Response) -> Result<Vec<String>> {
+        let bd = validate_get_body(res)?;
+        let s: Structure = serde_json::from_str(bd.as_str())?;
+
+        let df = s
+            .data
+            .ok_or(anyhow!("missing data"))?
+            .dataflows
+            .ok_or(anyhow!("missing dataflows"))?;
+
+        let out: Vec<_> = df
+            .into_iter()
+            .map(|d| Dataflow {
+                resource_id: d.id,
+                agency_id: d.agency_id,
+                name: d.name,
+                version: d.version,
+            })
+            .filter_map(|d| serde_json::to_string(&d).ok())
+            .collect();
+        return Ok(out);
     }
 
     fn name(&self) -> String {
@@ -110,30 +146,42 @@ impl Crawler {
         )?;
         println!("Starting {} crawler version {}", self.name, self.version);
 
-        let mut prior_data = "".to_string();
+        let mut prior_data = vec!["".to_string()];
         for stage in &self.stages {
             println!("Starting stage {}", stage.name());
 
-            let relative_url = stage.get_url(prior_data.clone())?;
+            let urls = stage.get_url(prior_data.clone())?;
 
-            let req_url = base_url.join(relative_url.as_str())?;
+            prior_data.clear();
+            for relative_url in urls {
+                let req_url = base_url.join(relative_url.as_str())?;
 
-            let res = make_request(
-                req_url,
-                {
-                    let mut hm = HeaderMap::new();
-                    hm.insert("Accept", "application/json".parse().unwrap());
-                    hm.insert(
-                        "User-Agent",
-                        (&self.user_agent).parse().unwrap(),
-                    );
-                    Some(hm)
-                },
-                self.warc_write,
-            )
-            .await?;
+                let res = make_request(
+                    req_url,
+                    {
+                        let mut hm = HeaderMap::new();
+                        hm.insert(
+                            "Accept",
+                            "application/json".parse().unwrap(),
+                        );
+                        hm.insert(
+                            "User-Agent",
+                            (&self.user_agent).parse().unwrap(),
+                        );
+                        Some(hm)
+                    },
+                    self.warc_write,
+                )
+                .await?;
 
-            prior_data = stage.extract_relevant(res)?;
+                let mut out = stage.extract_relevant(res)?;
+                prior_data.append(&mut out);
+            }
+            println!(
+                "Final output for stage {}: {:#?}",
+                stage.name(),
+                prior_data
+            );
         }
         Ok(())
     }

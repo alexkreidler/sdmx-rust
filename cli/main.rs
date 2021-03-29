@@ -8,6 +8,7 @@ use anyhow::Context;
 use clap::{load_yaml, App};
 use reqwest::Client;
 use sdmxblaze::{
+    crawler::Crawler,
     queries::metadata_query,
     reqwest_layer::Response,
     reqwest_warc::write_warc,
@@ -39,10 +40,12 @@ async fn main() -> anyhow::Result<()> {
             }
 
             for source in sources {
-                println!("{:#?}", source);
+                // println!("{:#?}", source);
 
-                let base_url =
-                    Url::parse(format!("{}/", &source.url).as_str())?;
+                let base_url = format!("{}/", &source.url);
+
+                let cr = Crawler::default();
+                cr.crawl(base_url).await?;
             }
             // sub_m.value_of("sources").ok_or("No sources file provided")
         } // clone was used
