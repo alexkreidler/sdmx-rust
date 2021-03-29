@@ -4,7 +4,7 @@ use reqwest::Client;
 use crate::{
     queries::metadata_query, reqwest_layer::Response, reqwest_warc::write_warc,
 };
-use anyhow::{Context, Result};
+use anyhow::{anyhow, Context, Result};
 use std::{any::Any, time::Instant};
 use std::{convert::TryFrom, string::ToString};
 use url::Url;
@@ -44,7 +44,7 @@ trait Stage {
     /// `prior` is any prior stage data relevant to this one, serialized as JSON
     fn get_url(&self, prior: String) -> Result<url::Url>;
 
-    fn extract_relevant(&self, res: Response) -> Result<url::Url>;
+    fn extract_relevant(&self, res: Response) -> Result<String>;
 }
 
 struct DataflowStage {}
@@ -56,7 +56,7 @@ impl Stage for DataflowStage {
             .context("Failed to parse URL")
     }
 
-    fn extract_relevant(&self, res: Response) -> Result<Url> {
+    fn extract_relevant(&self, res: Response) -> Result<String> {
         todo!()
     }
 
@@ -69,7 +69,9 @@ pub struct Crawler {
     name: String,
     version: String,
     user_agent: String,
-    write_warc: bool,
+    warc_write: bool,
+
+    // base_url: Option<String>,
     stages: Vec<Box<dyn Stage>>,
 }
 
@@ -86,7 +88,8 @@ impl Default for Crawler {
                 "Mozilla/5.0 (compatible; {}/{})",
                 name, version
             ),
-            write_warc: true,
+            warc_write: true,
+            // base_url: None,
             stages: vec![],
         }
     }
@@ -94,7 +97,44 @@ impl Default for Crawler {
 
 impl Crawler {
     pub async fn crawl(&self, endpoint: String) -> Result<()> {
+        let base_url = Url::parse(
+            endpoint.as_str()
+            // self.base_url
+            //     .clone()
+            //     .ok_or_else(|| {
+            //         anyhow!(
+            //             "You must provide a base URL before starting to crawl"
+            //         )
+            //     })?
+            //     .as_str(),
+        )?;
         println!("Starting {} crawler version {}", self.name, self.version);
+
+        let mut prior_data = "".to_string();
+        for stage in &self.stages {
+            println!("Starting stage {}", stage.name());
+
+            let relative_url = stage.get_url(prior_data.clone())?;
+
+            let req_url = base_url.join(relative_url.as_str())?;
+
+            let res = make_request(
+                req_url,
+                {
+                    let mut hm = HeaderMap::new();
+                    hm.insert("Accept", "application/json".parse().unwrap());
+                    hm.insert(
+                        "User-Agent",
+                        (&self.user_agent).parse().unwrap(),
+                    );
+                    Some(hm)
+                },
+                self.warc_write,
+            )
+            .await?;
+
+            prior_data = stage.extract_relevant(res)?;
+        }
         Ok(())
     }
 }
