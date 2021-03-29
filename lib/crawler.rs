@@ -82,7 +82,8 @@ mod tests {
 
     #[tokio::test]
     async fn get_dataflow_details() -> Result<()> {
-        let source = get_source("IMF")?;
+        let source =
+            get_source("./sources.json".to_string(), "IMF".to_string())?;
         get_dataflows(source.url + "/").await?;
         Ok(())
     }

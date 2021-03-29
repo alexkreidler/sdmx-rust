@@ -1,4 +1,4 @@
-use std::{fs, ops::Deref};
+use std::{fs, ops::Deref, path::Path};
 
 use serde_json::from_str;
 
@@ -6,19 +6,31 @@ use crate::sdmx_sources::{Source, Sources};
 
 use anyhow::{anyhow, Result};
 
-pub fn get_source<T: ToString>(sourceID: T) -> Result<Source> {
-    let sources = fs::read_to_string("./sources.json")?;
-
+/// Reads a JSON file of sources into memory
+pub fn read_sources<P: AsRef<Path>>(location: P) -> Result<Sources> {
+    let sources = fs::read_to_string(location)?;
     let res: Sources = from_str(&sources)?;
+    Ok(res)
+}
 
-    let out: Vec<_> = res
+/// Filters the provided sources by sourceIDs
+pub fn filter_sources(
+    sources: Sources,
+    sourceIDs: Vec<String>,
+) -> Result<Sources> {
+    let out: Vec<_> = sources
         .into_iter()
-        .filter(|s| s.id == sourceID.to_string())
+        .filter(|s| sourceIDs.contains(&s.id))
         .collect();
+    Ok(out)
+}
 
+/// Gets a single source from list of sources on disk
+pub fn get_source(location: String, sourceID: String) -> Result<Source> {
+    let out = filter_sources(read_sources(location)?, vec![sourceID.clone()])?;
     match out.len() {
         1 => Ok(out[0].clone()),
-        _ => Err(anyhow!("No source found for ID {}", sourceID.to_string())),
+        _ => Err(anyhow!("No source found for ID {}", sourceID)),
     }
 }
 

@@ -1,0 +1,36 @@
+name: sdmxblaze
+version: "1.0"
+author: Alex Kreidler
+about: Crawls SDMX Endpoints
+# args:
+#   - config:
+#       short: c
+#       long: config
+#       value_name: FILE
+#       about: Sets a custom config file
+#       takes_value: true
+#   - INPUT:
+#       about: Sets the input file to use
+#       required: true
+#       index: 1
+#   - verbose:
+#       short: v
+#       multiple: true
+#       about: Sets the level of verbosity
+subcommands:
+  - crawl:
+      about: Crawls the SDMX endpoint
+      args:
+        - sources:
+            short: s
+            long: sources
+            value_name: FILE
+            about: Set the source file
+            default_value: "./sources.json"
+            required: true
+        - SOURCES:
+            about: A subset of source IDs from the source file (defaults to all)
+            index: 1
+        - debug:
+            short: d
+            about: print debug information
