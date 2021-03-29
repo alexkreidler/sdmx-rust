@@ -43,36 +43,6 @@ async fn main() -> anyhow::Result<()> {
 
                 let base_url =
                     Url::parse(format!("{}/", &source.url).as_str())?;
-
-                let paths = ["dataflow", "all", "all"].to_vec();
-
-                // Joining with a base url replaces the last item in path (public)
-                let req_url =
-                    base_url.join(metadata_query(paths).as_str())?.to_string();
-
-                let start = Instant::now();
-                let client = Client::new();
-                let req = client
-                    .get(&req_url)
-                    .header("Accept", "application/json")
-                    .build()?;
-                let resp = client
-                    .execute(
-                        req.try_clone().context("Failed to clone request")?,
-                    )
-                    .await?;
-                let duration = start.elapsed();
-
-                let res = Response::parse(resp).await?;
-
-                let wr_start = Instant::now();
-                write_warc(req, res).await?;
-                let wr_duration = wr_start.elapsed();
-
-                println!(
-                    "Req {:?} duration {:?}, write dur {:?}",
-                    req_url, duration, wr_duration
-                );
             }
             // sub_m.value_of("sources").ok_or("No sources file provided")
         } // clone was used
