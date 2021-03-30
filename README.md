@@ -52,3 +52,9 @@ It seems that JSON support for metadata is not as widespread as thought before.
 Investigate XMLPath and JSONPath to simply extract dataset information.
 
 Try to load an initial batch into TypeSense.
+
+## Conclusions
+
+UNSD and WB both are fast and return JSON, but it is nonstandard, doesn't conform to the SDMX JSON schema. Therefore, my rust types are pretty bad. I could put their schemas into quicktype, but then I'd be maintaining 2.
+
+^ Huh I don't know how tired I was when I wrote this, b/c I just pasted both into a JSON Schema validator and it checked out. 
